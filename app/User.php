@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -36,4 +35,45 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function stars()
+    {
+        return $this->hasMany(Star::class, 'user_id', 'id');
+    }
+
+    public function avator()
+    {
+        return $this->morphOne(Image::class, 'image');
+    }
+
+    public function records()
+    {
+        return $this->hasMany(Record::class, 'user_id', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'comment');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'user_id', 'id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id');
+    }
+
+    public function coupons()
+    {
+        return $this->hasMany(Coupon::class, 'user_id', 'id');
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class, 'user_id', 'id');
+    }
+
 }
