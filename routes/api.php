@@ -16,4 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::apiResource('/address', 'AddressController');
+Route::post('/registerCommit', 'UserController@registerCommit');
