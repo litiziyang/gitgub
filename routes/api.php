@@ -18,4 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/address', 'AddressController');
-Route::post('/registerCommit', 'UserController@registerCommit');
+Route::post('/loginCommit', 'UserController@commit');
+Route::post('/loginVerify', 'UserController@verify');
+Route::post('/loginWechat', 'UserController@wechat');
+
+Route::resource('/user', 'UserController');

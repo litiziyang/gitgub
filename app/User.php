@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
 
 class User extends Authenticatable
 {
@@ -15,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'phone',
     ];
 
     /**
@@ -24,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
 
     /**
@@ -76,4 +78,29 @@ class User extends Authenticatable
         return $this->hasMany(Cart::class, 'user_id', 'id');
     }
 
+    /**
+     * 获取Token
+     * 默认过期时间1小时
+     */
+    public function getToken()
+    {
+        $token = (new Builder())
+            ->setIssuer('https://www.leisite.com')
+            ->setAudience('https://www.leisite.com')
+            ->setIssuedAt(time())
+            ->setExpiration(time() + env('JWTTIME', 3600))
+            ->set('id', $this->id)
+            ->sign(new Sha256(), config('app.jwt.secret'))
+            ->getToken();
+        return (string) $token;
+    }
+
+    public function getWechatApp()
+    {
+        $config = [
+            'app_id'        => env('WECHAT_APPID', ''),
+            'secret'        => env('WECHAT_SECRET', ''),
+            'response_type' => 'array',
+        ];
+    }
 }

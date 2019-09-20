@@ -11,7 +11,7 @@ class BaseResource extends JsonResource
     protected $code;
     protected $data;
 
-    public function __construct($data, $code, $msg)
+    public function __construct($code, $msg, $data = null)
     {
         $this->code = $code;
         $this->msg  = $msg;

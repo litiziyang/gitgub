@@ -26,8 +26,6 @@ class BannerController extends AdminController
     {
         $grid = new Grid(new Banner);
 
-
-
         return $grid;
     }
 
@@ -41,8 +39,6 @@ class BannerController extends AdminController
     {
         $show = new Show(Banner::findOrFail($id));
 
-
-
         return $show;
     }
 
@@ -55,7 +51,7 @@ class BannerController extends AdminController
     {
         $form = new Form(new Banner);
 
-
+        $form->image('image.url')->uniqueName();
 
         return $form;
     }

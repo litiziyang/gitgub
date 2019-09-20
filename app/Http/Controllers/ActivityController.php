@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +15,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
