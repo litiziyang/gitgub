@@ -21,5 +21,11 @@ Route::apiResource('/address', 'AddressController');
 Route::post('/loginCommit', 'UserController@commit');
 Route::post('/loginVerify', 'UserController@verify');
 Route::post('/loginWechat', 'UserController@wechat');
+Route::post('/secret', 'UserController@secret');
 
-Route::resource('/user', 'UserController');
+# image
+Route::post('/image/avatar', 'ImageController@avatar');
+
+# user
+Route::put('/user', 'UserController@update');
+Route::get('/user', 'UserController@index');

@@ -1,0 +1,368 @@
+[2019-09-20T17:43:06.514225+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_c6rtU-lfNuRsWUpHNTdnpE_rWaQzW0ol-brkDFG4UBFfHWIfeKLv8Gd4FBDxubD2MwohOWxdL26OQhLw-FaaJaNAv9NrHyOun1fh9wj30BLVWBstcyTKSf50JLoXZJPwp-aTic14OF_Y9fDfRVPdAGACGA&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=23&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Fri, 20 Sep 2019 09:43:06 GMT
+Content-Length: 78
+
+{"errcode":40029,"errmsg":"invalid code, hints: [ req_id: viJehNwgE-hRvWeA ]"}
+--------
+NULL  
+[2019-09-20T17:43:36.586994+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_c6rtU-lfNuRsWUpHNTdnpE_rWaQzW0ol-brkDFG4UBFfHWIfeKLv8Gd4FBDxubD2MwohOWxdL26OQhLw-FaaJaNAv9NrHyOun1fh9wj30BLVWBstcyTKSf50JLoXZJPwp-aTic14OF_Y9fDfRVPdAGACGA&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=021EcJvh16vXev0Zwquh1NURvh1EcJv0&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Fri, 20 Sep 2019 09:43:36 GMT
+Content-Length: 101
+
+{"session_key":"saYdByzMtTigg8mRD\/HJvg==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-20T17:57:32.897195+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_c6rtU-lfNuRsWUpHNTdnpE_rWaQzW0ol-brkDFG4UBFfHWIfeKLv8Gd4FBDxubD2MwohOWxdL26OQhLw-FaaJaNAv9NrHyOun1fh9wj30BLVWBstcyTKSf50JLoXZJPwp-aTic14OF_Y9fDfRVPdAGACGA&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=021InGc62cT3yR0iz2b62kKHc62InGcP&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Fri, 20 Sep 2019 09:57:32 GMT
+Content-Length: 100
+
+{"session_key":"c06z0CTh7bHnDK1l53BzmQ==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-20T17:58:10.165899+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_c6rtU-lfNuRsWUpHNTdnpE_rWaQzW0ol-brkDFG4UBFfHWIfeKLv8Gd4FBDxubD2MwohOWxdL26OQhLw-FaaJaNAv9NrHyOun1fh9wj30BLVWBstcyTKSf50JLoXZJPwp-aTic14OF_Y9fDfRVPdAGACGA&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=0017Kki70YxSlG1Dgpf70H0hi707Kki3&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Fri, 20 Sep 2019 09:58:10 GMT
+Content-Length: 100
+
+{"session_key":"c06z0CTh7bHnDK1l53BzmQ==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-20T17:58:34.786601+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_c6rtU-lfNuRsWUpHNTdnpE_rWaQzW0ol-brkDFG4UBFfHWIfeKLv8Gd4FBDxubD2MwohOWxdL26OQhLw-FaaJaNAv9NrHyOun1fh9wj30BLVWBstcyTKSf50JLoXZJPwp-aTic14OF_Y9fDfRVPdAGACGA&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=071xavM41p1nkT12EMO41sdsM41xavMH&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Fri, 20 Sep 2019 09:58:34 GMT
+Content-Length: 100
+
+{"session_key":"c06z0CTh7bHnDK1l53BzmQ==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:24:52.509885+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=061ZI2Wy00vfme1RHbXy0Jy5Wy0ZI2Wd&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:24:52 GMT
+Content-Length: 101
+
+{"session_key":"1iIlZwqfgTauJp\/e9Cpz5g==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:29:26.847976+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=071r1PIe2xRF1J0hbpGe2LtSIe2r1PID&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:29:26 GMT
+Content-Length: 100
+
+{"session_key":"TCEIic+NzBeAdiw7UapaeQ==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:30:53.201951+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=071nrpcf04E3Rt1J8ncf07Occf0nrpc9&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:30:53 GMT
+Content-Length: 100
+
+{"session_key":"TCEIic+NzBeAdiw7UapaeQ==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:32:31.356744+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=071drOBi2sgltA0yNjCi28qOBi2drOBR&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:32:31 GMT
+Content-Length: 101
+
+{"session_key":"\/rXoJC+8LZPBTLZNwozDeg==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:33:10.783717+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=011Wsn6B0Uur6i2Q6e4B0iZg6B0Wsn63&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:33:10 GMT
+Content-Length: 101
+
+{"session_key":"\/rXoJC+8LZPBTLZNwozDeg==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:34:50.018478+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=021Hgy300wXycI1Xtb000JmK300Hgy3g&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:34:49 GMT
+Content-Length: 100
+
+{"session_key":"ig6+OfipehkBXSPmpzkS0w==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:35:21.337882+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=0811LNNa1sXcCx09XcNa1L30Oa11LNNa&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:35:21 GMT
+Content-Length: 100
+
+{"session_key":"ig6+OfipehkBXSPmpzkS0w==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:36:10.025600+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=0811t7N90KgRCy1UeHJ90me1N901t7Nf&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:36:10 GMT
+Content-Length: 100
+
+{"session_key":"ig6+OfipehkBXSPmpzkS0w==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:36:24.439339+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=011A3naL0kj5M72lcT9L0b3IaL0A3nas&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:36:24 GMT
+Content-Length: 100
+
+{"session_key":"ig6+OfipehkBXSPmpzkS0w==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:37:08.556608+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=061fJrFX19Ub501EnyGX1MZvFX1fJrFi&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:37:08 GMT
+Content-Length: 100
+
+{"session_key":"dD8HMgUHyFVbHufcyFmGuw==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T10:38:14.053537+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_dTEetMf1pdyMGJdWgj_P_W4sOdFzG4NO9SQyXBi2Fj_Q-sgmJI9U592M8q_IbUApNa8dP2zrSjE_W2YtHRIpRwsm0KqFywD54CIU4O9-_dgFO7b6ge9H6LWJA2-UV7aY-hmtd6bSWyBvZ73JDOPfAHAKVW&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=081pPadi2EhQcB0n5Ngi2oXgdi2pPad1&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 02:38:14 GMT
+Content-Length: 100
+
+{"session_key":"dD8HMgUHyFVbHufcyFmGuw==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T15:28:29.719270+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_u1jP8rJpNdJru90v8LR59QOJdVhLvyjiba_M7sMmB-wuk__3LAcjUM67rhmZHywK3Lk-mFxBVu3jRdQrtIyE-qLZDWCeTZ-KM9VaZ1hDVuuh-qmaZxlgV4kMFI69y61QOnbCEFkZANjJmSA-EVRgADAWNJ&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=021xucmq0suyOm1yXZkq0Endmq0xucm6&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 07:28:29 GMT
+Content-Length: 100
+
+{"session_key":"EWGJZxSi8Jr8jzj2R7K8Rw==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T15:29:19.868938+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_u1jP8rJpNdJru90v8LR59QOJdVhLvyjiba_M7sMmB-wuk__3LAcjUM67rhmZHywK3Lk-mFxBVu3jRdQrtIyE-qLZDWCeTZ-KM9VaZ1hDVuuh-qmaZxlgV4kMFI69y61QOnbCEFkZANjJmSA-EVRgADAWNJ&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=001Y1Cze01a4lu1VVoBe0LEBze0Y1Czz&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 07:29:19 GMT
+Content-Length: 100
+
+{"session_key":"EWGJZxSi8Jr8jzj2R7K8Rw==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T15:31:20.955441+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_u1jP8rJpNdJru90v8LR59QOJdVhLvyjiba_M7sMmB-wuk__3LAcjUM67rhmZHywK3Lk-mFxBVu3jRdQrtIyE-qLZDWCeTZ-KM9VaZ1hDVuuh-qmaZxlgV4kMFI69y61QOnbCEFkZANjJmSA-EVRgADAWNJ&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=001RWg5e0pEiYu1Kfu6e0iGb5e0RWg5S&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 07:31:20 GMT
+Content-Length: 100
+
+{"session_key":"9R4w9pzyEs2bOJKd3hdjyw==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T15:37:17.125600+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_u1jP8rJpNdJru90v8LR59QOJdVhLvyjiba_M7sMmB-wuk__3LAcjUM67rhmZHywK3Lk-mFxBVu3jRdQrtIyE-qLZDWCeTZ-KM9VaZ1hDVuuh-qmaZxlgV4kMFI69y61QOnbCEFkZANjJmSA-EVRgADAWNJ&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=071Jxyte1PCa3z0Ymmse1EOgte1Jxytc&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 07:37:17 GMT
+Content-Length: 100
+
+{"session_key":"9SJR7ar8l2HL2PvFPgW58g==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T15:40:34.653443+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_u1jP8rJpNdJru90v8LR59QOJdVhLvyjiba_M7sMmB-wuk__3LAcjUM67rhmZHywK3Lk-mFxBVu3jRdQrtIyE-qLZDWCeTZ-KM9VaZ1hDVuuh-qmaZxlgV4kMFI69y61QOnbCEFkZANjJmSA-EVRgADAWNJ&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=001s1NR82EO6ZJ04FaR82dGUR82s1NRZ&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 07:40:34 GMT
+Content-Length: 100
+
+{"session_key":"FuTFXyHchkVOb9C1R9gzoA==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T15:47:43.193913+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_u1jP8rJpNdJru90v8LR59QOJdVhLvyjiba_M7sMmB-wuk__3LAcjUM67rhmZHywK3Lk-mFxBVu3jRdQrtIyE-qLZDWCeTZ-KM9VaZ1hDVuuh-qmaZxlgV4kMFI69y61QOnbCEFkZANjJmSA-EVRgADAWNJ&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=071LbO7f2bm4lI0FAc7f2ZjE7f2LbO7J&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 07:47:43 GMT
+Content-Length: 100
+
+{"session_key":"0y6xIsC4To9d72GaeyUm+w==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  
+[2019-09-21T15:49:28.921475+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=25_u1jP8rJpNdJru90v8LR59QOJdVhLvyjiba_M7sMmB-wuk__3LAcjUM67rhmZHywK3Lk-mFxBVu3jRdQrtIyE-qLZDWCeTZ-KM9VaZ1hDVuuh-qmaZxlgV4kMFI69y61QOnbCEFkZANjJmSA-EVRgADAWNJ&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=081bmxme1VjQVy0uX9pe1rhgme1bmxmS&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.3.9
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 21 Sep 2019 07:49:28 GMT
+Content-Length: 100
+
+{"session_key":"0y6xIsC4To9d72GaeyUm+w==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  

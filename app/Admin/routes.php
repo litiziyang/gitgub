@@ -19,4 +19,5 @@ Route::group([
     $router->resource('/coupon', 'CouponController');
     $router->resource('/order', 'OrderController');
     $router->resource('/transaction', 'TransactionController');
+    $router->resource('/user', 'UserController');
 });

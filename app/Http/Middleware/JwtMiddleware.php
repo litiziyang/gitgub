@@ -31,7 +31,7 @@ class JwtMiddleware
                 if ($parser->isExpired()) {
                     return new BaseResource(401, '登录信息已过期，请重新登录');
                 }
-                $request->id = $parser->getClaim('id');
+                $request->user_id = $parser->getClaim('id');
             } catch (Exception $e) {
                 return new BaseResource(400, 'Token错误，别闹了');
             }

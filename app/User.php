@@ -2,6 +2,7 @@
 
 namespace App;
 
+use EasyWeChat\Factory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lcobucci\JWT\Builder;
@@ -43,7 +44,7 @@ class User extends Authenticatable
         return $this->hasMany(Star::class, 'user_id', 'id');
     }
 
-    public function avator()
+    public function avatar()
     {
         return $this->morphOne(Image::class, 'image');
     }
@@ -95,12 +96,18 @@ class User extends Authenticatable
         return (string) $token;
     }
 
-    public function getWechatApp()
+    public static function getWechatApp()
     {
         $config = [
             'app_id'        => env('WECHAT_APPID', ''),
             'secret'        => env('WECHAT_SECRET', ''),
             'response_type' => 'array',
+            'log'           => [
+                'level' => 'debug',
+                'file'  => __DIR__ . '/wechat.log',
+            ],
         ];
+        $app = Factory::miniProgram($config);
+        return $app;
     }
 }

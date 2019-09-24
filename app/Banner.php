@@ -10,8 +10,8 @@ class Banner extends Model
         'target',
     ];
 
-    public function images()
+    public function image()
     {
-        return $this->morphMany(Image::class, 'image');
+        return $this->morphOne(Image::class, 'image');
     }
 }

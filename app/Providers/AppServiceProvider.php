@@ -6,6 +6,7 @@ use App\Activity;
 use App\Banner;
 use App\Comment;
 use App\Commodity;
+use App\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
             'comment'   => Comment::class,
             'activity'  => Activity::class,
             'banner'    => Banner::class,
+            'user'      => User::class,
         ]);
     }
 }

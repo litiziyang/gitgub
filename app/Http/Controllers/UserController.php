@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BaseResource;
+use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 
 class UserController extends Controller
@@ -20,9 +22,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return 'sdf';
+        $user = User::with('avatar')
+            ->findOrFail($request->user_id);
+        return new BaseResource(0, '', new UserResource($user));
     }
 
     /**
@@ -47,16 +51,19 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data      = $request->all();
+        $validator = Validator::make($data, [
+            'name' => 'required|min:2|max:12',
+        ]);
+        if ($validator->fails()) {
+            return new BaseResource(400, '昵称为2到12位的中英文数字组合', $validator->errors());
+        }
+        $user       = User::findOrFail($request->user_id);
+        $user->name = $data['name'];
+        $user->save();
+        return new BaseResource(0, '更新成功');
     }
 
     /**
@@ -124,12 +131,38 @@ class UserController extends Controller
     public function wechat(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'code' => 'required',
+            'code'  => 'required',
+            'phone' => 'required',
         ]);
         if ($validator->fails()) {
             return new BaseResource(400, '参数错误');
         }
         $data = $request->all();
-        
+        $code = $data['code'];
+        $app  = User::getWechatApp();
+        $res  = $app->auth->session($code);
+        if (!$res['openid']) {
+            return new BaseResource(-1, '微信授权登录失败，请使用手机号或稍后再试');
+        } else {
+            $user = User::firstOrNew([
+                // 'open_id' => $res['openid'],
+                'phone' => $data['phone'],
+            ]);
+            if ($user->open_id != null && $user->open_id != $res['openid']) {
+                return new BaseResource(-1, '该手机号已绑定其他微信');
+            }
+            $user->open_id = $res['openid'];
+            $user->save();
+            $token = $user->getToken();
+            return new BaseResource(0, '', [
+                'token' => $token,
+            ]);
+        }
+    }
+
+    public function secret()
+    {
+        $disk = Storage::disk('cosv5');
+        return new BaseResource(0, '', $disk->getFederationTokenV3('*', 7200, null, 'cos'));
     }
 }

@@ -25,6 +25,8 @@ class BannerController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Banner);
+        $grid->column('target','点击跳转网址');
+        $grid->column('image.url');
 
         return $grid;
     }
@@ -52,7 +54,7 @@ class BannerController extends AdminController
         $form = new Form(new Banner);
 
         $form->image('image.url')->uniqueName();
-
+        $form->text('target', '点击跳转网址');
         return $form;
     }
 }

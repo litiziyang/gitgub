@@ -26,7 +26,14 @@ class ActivityController extends AdminController
     {
         $grid = new Grid(new Activity);
 
-
+        $grid->column('id', __('Id'));
+        $grid->column('name', __('Name'));
+        $grid->column('quota', __('Quota'));
+        $grid->column('offer', __('Offer'));
+        $grid->column('type', __('Type'));
+        $grid->column('expire', __('Expire'));
+        $grid->column('created_at', __('Created at'));
+        $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -41,7 +48,14 @@ class ActivityController extends AdminController
     {
         $show = new Show(Activity::findOrFail($id));
 
-
+        $show->field('id', __('Id'));
+        $show->field('name', __('Name'));
+        $show->field('quota', __('Quota'));
+        $show->field('offer', __('Offer'));
+        $show->field('type', __('Type'));
+        $show->field('expire', __('Expire'));
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -55,7 +69,11 @@ class ActivityController extends AdminController
     {
         $form = new Form(new Activity);
 
-
+        $form->text('name', __('Name'));
+        $form->decimal('quota', __('Quota'));
+        $form->decimal('offer', __('Offer'));
+        $form->text('type', __('Type'))->default('normal');
+        $form->datetime('expire', __('Expire'))->default(date('Y-m-d H:i:s'));
 
         return $form;
     }
