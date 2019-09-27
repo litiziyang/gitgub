@@ -20,4 +20,6 @@ Route::group([
     $router->resource('/order', 'OrderController');
     $router->resource('/transaction', 'TransactionController');
     $router->resource('/user', 'UserController');
+    $router->resource('/commodity', 'CommodityController');
+    $router->resource('/image', 'ImageController');
 });

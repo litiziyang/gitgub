@@ -2,7 +2,13 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Image\Commodity\Banner;
+use App\Admin\Actions\Image\Commodity\BannerShow;
+use App\Admin\Actions\Image\Commodity\Details;
+use App\Admin\Actions\Image\Commodity\DetailsShow;
+use App\Category;
 use App\Commodity;
+use App\Image;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -37,6 +43,13 @@ class CommodityController extends AdminController
         $grid->column('count_stack', __('Count stack'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+
+        $grid->actions(function ($actions) {
+            $actions->add(new Banner);
+            $actions->add(new BannerShow);
+            $actions->add(new Details);
+            $actions->add(new DetailsShow);
+        });
 
         return $grid;
     }
@@ -76,13 +89,40 @@ class CommodityController extends AdminController
         $form = new Form(new Commodity);
 
         $form->text('title', __('Title'));
-        $form->number('category_id', __('Category id'));
+
+        $categories = Category::all();
+        $options    = [];
+        foreach (($categories) as $category) {
+            $options[$category->id] = $category->name;
+        }
+        $form->select('category_id', __('Category'))->options($options);
+
         $form->decimal('price', __('Price'));
         $form->decimal('reward', __('Reward'));
-        $form->number('count_sales', __('Count sales'));
-        $form->number('count_comment', __('Count comment'));
-        $form->number('count_view', __('Count view'));
-        $form->number('count_stack', __('Count stack'));
+
+        if (!$form->isEditing()) {
+            $form->multipleImage('banners', '展示图片')->uniqueName();
+            $form->multipleImage('details', '详情图片')->uniqueName();
+        }
+
+        $form->saved(function (Form $form) {
+            $banners = $form->model()->banners;
+            $details = $form->model()->details;
+            foreach ($banners as $key => $url) {
+                Image::create([
+                    'url'        => $url,
+                    'image_type' => 'commodity_banner',
+                    'image_id'   => $form->model()->id,
+                ]);
+            }
+            foreach ($details as $key => $url) {
+                Image::create([
+                    'url'        => $url,
+                    'image_type' => 'commodity_detail',
+                    'image_id'   => $form->model()->id,
+                ]);
+            }
+        });
 
         return $form;
     }

@@ -29,3 +29,6 @@ Route::post('/image/avatar', 'ImageController@avatar');
 # user
 Route::put('/user', 'UserController@update');
 Route::get('/user', 'UserController@index');
+
+#banner
+Route::get('/banner', 'BannerController@index');

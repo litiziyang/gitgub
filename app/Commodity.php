@@ -17,12 +17,36 @@ class Commodity extends Model
         'count_stock',
     ];
 
+    public $banners;
+    public $details;
+
+    public function setBannersAttribute($banners)
+    {
+        $this->banners = $banners;
+    }
+
+    public function setdetailsAttribute($details)
+    {
+        $this->details = $details;
+    }
+
     public function activities()
     {
         return $this->belongsToMany(Activity::class, 'activity_commodity', 'activity_id', 'commodity_id');
     }
 
-    public function category(){
-        return $this->belongsTo(Category::class,'id','category_id');
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'id', 'category_id');
+    }
+
+    public function bannerImages()
+    {
+        return $this->morphMany(Image::class, 'image');
+    }
+
+    public function detailsImages()
+    {
+        return $this->morphMany(Image::class, 'image');
     }
 }

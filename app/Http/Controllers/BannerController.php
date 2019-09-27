@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use App\Http\Resources\BannerResource;
+use App\Http\Resources\BaseResource;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller
@@ -14,17 +16,10 @@ class BannerController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $banners = Banner::with('image')
+            ->orderBy('level', 'desc')
+            ->get();
+        return new BaseResource(0, '', BannerResource::collection($banners));
     }
 
     /**
@@ -34,17 +29,6 @@ class BannerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Banner  $banner
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Banner $banner)
     {
         //
     }

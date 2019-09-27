@@ -25,8 +25,12 @@ class BannerController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Banner);
-        $grid->column('target','点击跳转网址');
-        $grid->column('image.url');
+        $grid->column('target', __('Target'));
+        $grid->column('image.url', __('Url'))->image();
+        $grid->column('level', __('Level'));
+        $grid->column('color', __('Color'))->display(function ($color) {
+            return '<div style="width:35px;height:35px;padding:5px;background:' .$color .';"></div>';
+        });
 
         return $grid;
     }
@@ -55,6 +59,8 @@ class BannerController extends AdminController
 
         $form->image('image.url')->uniqueName();
         $form->text('target', '点击跳转网址');
+        $form->number('level', __('Level'));
+        $form->color('color', __('Color'));
         return $form;
     }
 }
