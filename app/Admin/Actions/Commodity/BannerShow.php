@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Actions\Image\Commodity;
+namespace App\Admin\Actions\Commodity;
 
 use Encore\Admin\Actions\RowAction;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +18,6 @@ class BannerShow extends RowAction
 
     public function href()
     {
-        return '/admin/image?type=commodity_banner&commodity_id=' . $this->getKey();
+        return '/admin/image?type=commodity&tag=banner&id=' . $this->getKey();
     }
 }

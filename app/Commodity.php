@@ -37,16 +37,16 @@ class Commodity extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'id', 'category_id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     public function bannerImages()
     {
-        return $this->morphMany(Image::class, 'image');
+        return $this->morphMany(Image::class, 'image')->where('tag', 'banner');
     }
 
-    public function detailsImages()
+    public function detailImages()
     {
-        return $this->morphMany(Image::class, 'image');
+        return $this->morphMany(Image::class, 'image')->where('tag', 'detail');
     }
 }

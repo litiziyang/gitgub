@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Admin\Actions\Image\Commodity;
+namespace App\Admin\Actions\Commodity;
 
 use Encore\Admin\Actions\RowAction;
 use Illuminate\Database\Eloquent\Model;
 
-class DetailsShow extends RowAction
+class Banner extends RowAction
 {
-    public $name = '查看详情图';
+    public $name = '添加展示图';
 
     public function handle(Model $model)
     {
@@ -18,6 +18,7 @@ class DetailsShow extends RowAction
 
     public function href()
     {
-        return '/admin/image?type=commodity_details&commodity_id=' . $this->getKey();
+        return '/admin/image/create?type=commodity&tag=banner&id=' . $this->getKey();
     }
+
 }

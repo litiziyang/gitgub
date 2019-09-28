@@ -27,9 +27,13 @@ class ImageController extends AdminController
         $grid = new Grid(new Image);
 
         $type     = request()->type;
-        $image_id = request()->commodity_id;
-        if ($type != null && $image_id != null) {
-            $grid->model()->where('image_type', $type)->where('image_id', $image_id);
+        $id = request()->id;
+        $tag      = request()->tag;
+        if ($type != null && $id != null) {
+            $grid->model()->where('image_type', $type)->where('image_id', $id);
+        }
+        if ($tag != null) {
+            $grid->model()->where('tag', $tag);
         }
 
         $grid->column('id', __('Id'));

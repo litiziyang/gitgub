@@ -31,12 +31,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             // 'commodity' => Commodity::class,
-            'comment'           => Comment::class,
-            'activity'          => Activity::class,
-            'banner'            => Banner::class,
-            'user'              => User::class,
-            'commodity_banner'  => Commodity::class,
-            'commodity_detail' => Commodity::class,
+            'comment'          => Comment::class,
+            'activity'         => Activity::class,
+            'banner'           => Banner::class,
+            'user'             => User::class,
+            'commodity' => Commodity::class,
         ]);
     }
 }

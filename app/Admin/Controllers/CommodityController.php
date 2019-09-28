@@ -2,10 +2,12 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Actions\Image\Commodity\Banner;
-use App\Admin\Actions\Image\Commodity\BannerShow;
-use App\Admin\Actions\Image\Commodity\Details;
-use App\Admin\Actions\Image\Commodity\DetailsShow;
+use App\Admin\Actions\Commodity\SpecificationShow;
+use App\Admin\Actions\Commodity\Banner;
+use App\Admin\Actions\Commodity\BannerShow;
+use App\Admin\Actions\Commodity\Details;
+use App\Admin\Actions\Commodity\DetailsShow;
+use App\Admin\Actions\Commodity\Specification;
 use App\Category;
 use App\Commodity;
 use App\Image;
@@ -34,21 +36,24 @@ class CommodityController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('title', __('Title'));
-        $grid->column('category_id', __('Category id'));
+        $grid->column('category.name', __('Category'));
         $grid->column('price', __('Price'));
         $grid->column('reward', __('Reward'));
         $grid->column('count_sales', __('Count sales'));
-        $grid->column('count_comment', __('Count comment'));
-        $grid->column('count_view', __('Count view'));
+        // $grid->column('count_comment', __('Count comment'));
+        // $grid->column('count_view', __('Count view'));
         $grid->column('count_stack', __('Count stack'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+
+        $grid->column('created_at', __('Created at'))->hide();
+        $grid->column('updated_at', __('Updated at'))->hide();
 
         $grid->actions(function ($actions) {
             $actions->add(new Banner);
             $actions->add(new BannerShow);
             $actions->add(new Details);
             $actions->add(new DetailsShow);
+            $actions->add(new Specification);
+            $actions->add(new SpecificationShow);
         });
 
         return $grid;
@@ -73,6 +78,28 @@ class CommodityController extends AdminController
         $show->field('count_comment', __('Count comment'));
         $show->field('count_view', __('Count view'));
         $show->field('count_stack', __('Count stack'));
+
+        $commodity = Commodity::with('bannerImages')
+            ->with('detailImages')
+            ->findOrFail($id);
+        $bannerImages = $commodity->bannerImages;
+        $i            = 0;
+        foreach ($bannerImages as $image) {
+            $i++;
+            $show->field('展示图' . $i)->as(function () use ($image) {
+                return $image->url;
+            })->image();
+        }
+
+        $detailImages = $commodity->detailImages;
+        $i            = 0;
+        foreach ($detailImages as $image) {
+            $i++;
+            $show->field('详情图' . $i)->as(function () use ($image) {
+                return $image->url;
+            })->image();
+        }
+
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 

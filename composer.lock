@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc5a6119be92dfa902fdcc5820275541",
+    "content-hash": "653dca8e4b1ff75d7d305ca08ae7110b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2834,6 +2834,58 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "smallruraldog/light-box",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SmallRuralDog/light-box.git",
+                "reference": "323770478c17a3240ae6235a5132e6d3e12f9fc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SmallRuralDog/light-box/zipball/323770478c17a3240ae6235a5132e6d3e12f9fc4",
+                "reference": "323770478c17a3240ae6235a5132e6d3e12f9fc4",
+                "shasum": ""
+            },
+            "require": {
+                "encore/laravel-admin": "~1.6",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SmallRuralDog\\LightBox\\LightBoxServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SmallRuralDog\\LightBox\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SmallRuralDog",
+                    "email": "296404875@qq.com"
+                }
+            ],
+            "description": "灯箱扩展",
+            "homepage": "https://github.com/SmallRuralDog/light-box",
+            "keywords": [
+                "extension",
+                "laravel-admin"
+            ],
+            "time": "2018-12-18T01:54:58+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

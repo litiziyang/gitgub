@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Admin\Actions\Image\Commodity;
+namespace App\Admin\Actions\Commodity;
 
 use Encore\Admin\Actions\RowAction;
 use Illuminate\Database\Eloquent\Model;
 
-class Banner extends RowAction
+class Specification extends RowAction
 {
-    public $name = '添加展示图';
+    public $name = '添加规格';
 
     public function handle(Model $model)
     {
@@ -15,10 +15,8 @@ class Banner extends RowAction
 
         return $this->response()->success('Success message.')->refresh();
     }
-
     public function href()
     {
-        return '/admin/image/create?type=commodity_banner&commodity_id=' . $this->getKey();
+        return '/admin/specification/create?id=' . $this->getKey();
     }
-
 }
