@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Resources\BaseResource;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -14,7 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::with('child')
+            ->where('category_id', null)
+            ->get();
+        return new BaseResource(0, '', CategoryResource::collection($categories));
     }
 
     /**

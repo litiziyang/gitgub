@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Commodity;
+use App\Http\Resources\BaseResource;
+use App\Http\Resources\CommodityResource;
 use Illuminate\Http\Request;
 
 class CommodityController extends Controller
@@ -15,6 +17,15 @@ class CommodityController extends Controller
     public function index()
     {
         //
+    }
+
+    public function home()
+    {
+        $commodities = Commodity::with('bannerImages')
+            ->orderBy('count_sales', 'desc')
+            ->take(18)
+            ->get();
+        return new BaseResource(0, '', CommodityResource::collection($commodities));
     }
 
     /**

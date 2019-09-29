@@ -53,8 +53,8 @@ class CommodityController extends AdminController
             $actions->add(new BannerShow);
             $actions->add(new Details);
             $actions->add(new DetailsShow);
-            $actions->add(new Specification);
-            $actions->add(new SpecificationShow);
+            // $actions->add(new Specification);
+            // $actions->add(new SpecificationShow);
         });
 
         return $grid;
@@ -100,12 +100,13 @@ class CommodityController extends AdminController
                 return $image->url;
             })->image();
         }
-        $specifications = $commodity->specifications;
-        foreach($specifications as $specification){
-            $show->field($specification->name)->as(function() use ($specification){
-                return $specification->quantity;
-            });
-        }
+
+        // $specifications = $commodity->specifications;
+        // foreach($specifications as $specification){
+        //     $show->field($specification->name)->as(function() use ($specification){
+        //         return $specification->quantity;
+        //     });
+        // }
 
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -126,37 +127,40 @@ class CommodityController extends AdminController
 
         $categories = Category::all();
         $options    = [];
-        foreach (($categories) as $category) {
-            $options[$category->id] = $category->name;
+        foreach ($categories as $category) {
+            if(sizeof($category->child) == 0){
+                $options[$category->id] = $category->name;
+            }
         }
         $form->select('category_id', __('Category'))->options($options)->required();
 
         $form->decimal('price', __('Price'))->required();
         $form->decimal('reward', __('Reward'))->required();
+        $form->number('count_stack',__('Count stack'))->required();
 
         if (!$form->isEditing()) {
             $form->multipleImage('banners', '展示图片')->uniqueName();
             $form->multipleImage('details', '详情图片')->uniqueName();
-            $form->table('specification', function ($table) {
-                $table->text('name');
-                $table->text('quantity');
-            });
+            // $form->table('specification', function ($table) {
+            //     $table->text('name');
+            //     $table->text('quantity');
+            // });
         }
 
         $form->saved(function (Form $form) {
             $banners        = $form->model()->banners;
             $details        = $form->model()->details;
-            $specifications = $form->model()->specificationArray;
-            if ($specifications != null) {
-                foreach ($specifications as $specification) {
-                    AppSpecification::create([
-                        'name'         => $specification['name'],
-                        'quantity'     => $specification['quantity'],
-                        'commodity_id' => $form->model()->id,
-                    ]);
-                }
-                $form->model()->countSpecification();
-            }
+            // $specifications = $form->model()->specificationArray;
+            // if ($specifications != null) {
+            //     foreach ($specifications as $specification) {
+            //         AppSpecification::create([
+            //             'name'         => $specification['name'],
+            //             'quantity'     => $specification['quantity'],
+            //             'commodity_id' => $form->model()->id,
+            //         ]);
+            //     }
+            //     $form->model()->countSpecification();
+            // }
 
             if ($banners != null) {
                 foreach ($banners as $key => $url) {
