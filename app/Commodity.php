@@ -14,11 +14,30 @@ class Commodity extends Model
         'count_sales',
         'count_comment',
         'count_view',
-        'count_stock',
+        'count_stack',
     ];
 
     public $banners;
     public $details;
+    public $specificationArray;
+
+    public function getSpecificationAttribute()
+    {
+        $specifications      = $this->specifications;
+        $specification_array = [];
+        foreach ($specifications as $specification) {
+            $array             = [];
+            $array['name']     = $specification->name;
+            $array['quantity'] = $specification->quantity;
+            array_push($specification_array, $array);
+        }
+        return $specification_array;
+    }
+
+    public function setSpecificationAttribute($specifications)
+    {
+        $this->specificationArray = $specifications;
+    }
 
     public function setBannersAttribute($banners)
     {
@@ -48,5 +67,21 @@ class Commodity extends Model
     public function detailImages()
     {
         return $this->morphMany(Image::class, 'image')->where('tag', 'detail');
+    }
+
+    public function specifications()
+    {
+        return $this->hasMany(Specification::class, 'commodity_id', 'id');
+    }
+
+    public function countSpecification()
+    {
+        $specifications = $this->specifications;
+        $quantity       = 0;
+        foreach ($specifications as $specification) {
+            $quantity += $specification->quantity;
+        }
+        $this->count_stack = $quantity;
+        $this->save();
     }
 }

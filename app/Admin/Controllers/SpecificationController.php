@@ -2,11 +2,13 @@
 
 namespace App\Admin\Controllers;
 
+use App\Commodity;
 use App\Specification;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\MessageBag;
 
 class SpecificationController extends AdminController
 {
@@ -34,8 +36,17 @@ class SpecificationController extends AdminController
         // $grid->column('commodity_id', __('Commodity id'));
         $grid->column('name', __('Name'));
         $grid->column('quantity', __('Quantity'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('created_at', __('Created at'))->hide();
+        $grid->column('updated_at', __('Updated at'))->hide();
+
+        $grid->actions(function ($actions) {
+            // $actions->disableDelete();
+            // $actions->disableEdit();
+            // $actions->disableView();
+        });
+        $grid->batchActions(function ($batch) {
+            $batch->disableDelete();
+        });
 
         return $grid;
     }
@@ -69,9 +80,25 @@ class SpecificationController extends AdminController
     {
         $form = new Form(new Specification);
 
-        $form->number('commodity_id', __('Commodity id'));
+        $commodity_id = request()->commodity_id;
+        $form->hidden('commodity_id')->value($commodity_id);
+
         $form->text('name', __('Name'));
         $form->number('quantity', __('Quantity'));
+
+        $form->submitted(function ($form) use ($commodity_id) {
+            if ($commodity_id == null) {
+                $error = new MessageBag([
+                    'title'   => '错误',
+                    'message' => '关键参数缺失，请从商品页进入',
+                ]);
+
+                return back()->with(compact('error'));
+            }
+        });
+        $form->saved(function ($form) {
+            $form->model()->commodity->countSpecification();
+        });
 
         return $form;
     }

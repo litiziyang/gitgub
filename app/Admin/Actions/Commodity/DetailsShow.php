@@ -18,6 +18,6 @@ class DetailsShow extends RowAction
 
     public function href()
     {
-        return '/admin/image?type=commodity&tag=detail&id=' . $this->getKey();
+        return '/admin/image?type=commodity&tag=detail&image_id=' . $this->getKey();
     }
 }

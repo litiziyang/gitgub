@@ -18,7 +18,7 @@ class Banner extends RowAction
 
     public function href()
     {
-        return '/admin/image/create?type=commodity&tag=banner&id=' . $this->getKey();
+        return '/admin/image/create?type=commodity&tag=banner&image_id=' . $this->getKey();
     }
 
 }

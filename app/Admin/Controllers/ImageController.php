@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\MessageBag;
 
 class ImageController extends AdminController
 {
@@ -26,9 +27,9 @@ class ImageController extends AdminController
     {
         $grid = new Grid(new Image);
 
-        $type     = request()->type;
-        $id = request()->id;
-        $tag      = request()->tag;
+        $type = request()->type;
+        $id   = request()->image_id;
+        $tag  = request()->tag;
         if ($type != null && $id != null) {
             $grid->model()->where('image_type', $type)->where('image_id', $id);
         }
@@ -42,6 +43,7 @@ class ImageController extends AdminController
         $grid->column('image_id', __('Image id'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+
 
         return $grid;
     }
@@ -76,12 +78,25 @@ class ImageController extends AdminController
         $form = new Form(new Image);
 
         $image_type = request()->type;
-        $image_id   = request()->commodity_id;
+        $image_id   = request()->image_id;
+        $tag        = request()->tag;
 
-        $form->text('image_id')->value($image_id);
-        $form->text('image_type')->value($image_type);
+        $form->hidden('image_id')->value($image_id);
+        $form->hidden('image_type')->value($image_type);
+        $form->hidden('tag')->value($tag);
+
         $form->image('url')->uniqueName();
 
+        $form->submitted(function ($form) use ($image_type, $image_id, $tag) {
+            if ($image_type == null || $image_id == null || $tag == null) {
+                $error = new MessageBag([
+                    'title'   => '错误',
+                    'message' => '关键参数缺失，请从商品页进入',
+                ]);
+
+                return back()->with(compact('error'));
+            }
+        });
         return $form;
     }
 }

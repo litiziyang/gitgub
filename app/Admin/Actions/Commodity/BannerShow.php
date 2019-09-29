@@ -18,6 +18,6 @@ class BannerShow extends RowAction
 
     public function href()
     {
-        return '/admin/image?type=commodity&tag=banner&id=' . $this->getKey();
+        return '/admin/image?type=commodity&tag=banner&image_id=' . $this->getKey();
     }
 }

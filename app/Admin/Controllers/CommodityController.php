@@ -2,15 +2,16 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Actions\Commodity\SpecificationShow;
 use App\Admin\Actions\Commodity\Banner;
 use App\Admin\Actions\Commodity\BannerShow;
 use App\Admin\Actions\Commodity\Details;
 use App\Admin\Actions\Commodity\DetailsShow;
 use App\Admin\Actions\Commodity\Specification;
+use App\Admin\Actions\Commodity\SpecificationShow;
 use App\Category;
 use App\Commodity;
 use App\Image;
+use App\Specification as AppSpecification;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -99,6 +100,12 @@ class CommodityController extends AdminController
                 return $image->url;
             })->image();
         }
+        $specifications = $commodity->specifications;
+        foreach($specifications as $specification){
+            $show->field($specification->name)->as(function() use ($specification){
+                return $specification->quantity;
+            });
+        }
 
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -115,39 +122,59 @@ class CommodityController extends AdminController
     {
         $form = new Form(new Commodity);
 
-        $form->text('title', __('Title'));
+        $form->text('title', __('Title'))->required();
 
         $categories = Category::all();
         $options    = [];
         foreach (($categories) as $category) {
             $options[$category->id] = $category->name;
         }
-        $form->select('category_id', __('Category'))->options($options);
+        $form->select('category_id', __('Category'))->options($options)->required();
 
-        $form->decimal('price', __('Price'));
-        $form->decimal('reward', __('Reward'));
+        $form->decimal('price', __('Price'))->required();
+        $form->decimal('reward', __('Reward'))->required();
 
         if (!$form->isEditing()) {
             $form->multipleImage('banners', '展示图片')->uniqueName();
             $form->multipleImage('details', '详情图片')->uniqueName();
+            $form->table('specification', function ($table) {
+                $table->text('name');
+                $table->text('quantity');
+            });
         }
 
         $form->saved(function (Form $form) {
-            $banners = $form->model()->banners;
-            $details = $form->model()->details;
-            foreach ($banners as $key => $url) {
-                Image::create([
-                    'url'        => $url,
-                    'image_type' => 'commodity_banner',
-                    'image_id'   => $form->model()->id,
-                ]);
+            $banners        = $form->model()->banners;
+            $details        = $form->model()->details;
+            $specifications = $form->model()->specificationArray;
+            if ($specifications != null) {
+                foreach ($specifications as $specification) {
+                    AppSpecification::create([
+                        'name'         => $specification['name'],
+                        'quantity'     => $specification['quantity'],
+                        'commodity_id' => $form->model()->id,
+                    ]);
+                }
+                $form->model()->countSpecification();
             }
-            foreach ($details as $key => $url) {
-                Image::create([
-                    'url'        => $url,
-                    'image_type' => 'commodity_detail',
-                    'image_id'   => $form->model()->id,
-                ]);
+
+            if ($banners != null) {
+                foreach ($banners as $key => $url) {
+                    Image::create([
+                        'url'        => $url,
+                        'image_type' => 'commodity_banner',
+                        'image_id'   => $form->model()->id,
+                    ]);
+                }
+            }
+            if ($details != null) {
+                foreach ($details as $key => $url) {
+                    Image::create([
+                        'url'        => $url,
+                        'image_type' => 'commodity_detail',
+                        'image_id'   => $form->model()->id,
+                    ]);
+                }
             }
         });
 

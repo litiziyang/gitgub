@@ -17,6 +17,6 @@ class SpecificationShow extends RowAction
     }
     public function href()
     {
-        return '/admin/specification?id=' . $this->getKey();
+        return '/admin/specification?commodity_id=' . $this->getKey();
     }
 }
