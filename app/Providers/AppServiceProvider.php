@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Activity;
 use App\Banner;
+use App\Category;
 use App\Comment;
 use App\Commodity;
 use App\User;
@@ -31,11 +32,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             // 'commodity' => Commodity::class,
-            'comment'          => Comment::class,
-            'activity'         => Activity::class,
-            'banner'           => Banner::class,
-            'user'             => User::class,
+            'comment'   => Comment::class,
+            'activity'  => Activity::class,
+            'banner'    => Banner::class,
+            'user'      => User::class,
             'commodity' => Commodity::class,
+            'category'  => Category::class,
         ]);
     }
 }

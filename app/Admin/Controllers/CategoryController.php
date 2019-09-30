@@ -25,12 +25,12 @@ class CategoryController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Category);
-
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
         $grid->column('parent.name', __('Parent'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('image.url')->image();
+        $grid->column('created_at', __('Created at'))->hide();
+        $grid->column('updated_at', __('Updated at'))->hide();
 
         return $grid;
     }
@@ -48,6 +48,7 @@ class CategoryController extends AdminController
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
         $show->field('category_id', __('Parent'));
+        $show->field('image.url')->image();
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -63,13 +64,14 @@ class CategoryController extends AdminController
     {
         $form = new Form(new Category);
 
-        $categories = Category::where('category_id', null)->get();
-        $options     = [];
-        foreach (($categories) as $category) {
+        $categories = Category::all();
+        $options    = [];
+        foreach ($categories as $category) {
             $options[$category->id] = $category->name;
         }
         $form->text('name', __('Name'));
         $form->select('category_id', __('Parent'))->options($options);
+        $form->image('image.url');
 
         return $form;
     }

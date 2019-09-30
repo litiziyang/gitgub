@@ -20,4 +20,9 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'category_id', 'id');
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'image');
+    }
 }

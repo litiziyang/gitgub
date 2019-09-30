@@ -35,6 +35,7 @@ Route::get('/banner', 'BannerController@index');
 
 #commodity
 Route::get('/commodity/home', 'CommodityController@home');
+Route::get('/commodity', 'CommodityController@index');
 
 #category
 Route::get('/category', 'CategoryController@index');

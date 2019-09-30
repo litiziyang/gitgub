@@ -16,12 +16,28 @@ class CommodityController extends Controller
      */
     public function index()
     {
-        //
+        $commodities = Commodity::with('bannerImages');
+        // ->where('count_stack', '>', '0');
+        $category_id = request()->category_id;
+        $order_by    = request()->order_by;
+        $order_type  = request()->order_type;
+
+        if ($category_id != null) {
+            $commodities->where('category_id', $category_id);
+        }
+        if ($order_by != null && $order_by != null) {
+            $commodities->orderBy($order_by, $order_type);
+        } else {
+            $commodities->orderBy('count_sales', 'desc');
+        }
+        $commodities = $commodities->paginate(18);
+        return new BaseResource(0, '', CommodityResource::collection($commodities));
     }
 
     public function home()
     {
         $commodities = Commodity::with('bannerImages')
+        // ->where('count_stack', '>', '0')
             ->orderBy('count_sales', 'desc')
             ->take(18)
             ->get();

@@ -22,7 +22,8 @@ class CommodityResource extends JsonResource
             'count_sales' => $this->count_sales,
             'count_view'  => $this->count_view,
             'count_stack' => $this->count_stack,
-            'image' => $this->bannerImages ? env('COSV5_CDN'). '/'. $this->bannerImages[0]->url : null,
+            // 'image'       => sizeof($this->bannerImages) > 0 ? env('COSV5_CDN') . '/' . $this->bannerImages[0]->url : null,
+            'image'       =>  null,
         ];
     }
 }

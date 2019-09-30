@@ -15,8 +15,11 @@ class CategoryResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'  => $this->name,
-            'child' => CategoryResource::collection($this->child),
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'category_id' => $this->category_id,
+            'child'       => CategoryResource::collection($this->child),
+            'image'       => $this->image ? env('COSV5_CDN') . '/' . $this->image->url : null,
         ];
     }
 }
