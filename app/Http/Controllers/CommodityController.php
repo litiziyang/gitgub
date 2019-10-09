@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Commodity;
 use App\Http\Resources\BaseResource;
+use App\Http\Resources\CommodityDetailResource;
 use App\Http\Resources\CommodityResource;
 use Illuminate\Http\Request;
 
@@ -73,7 +74,7 @@ class CommodityController extends Controller
      */
     public function show(Commodity $commodity)
     {
-        //
+        return new BaseResource(0, '', new CommodityDetailResource($commodity));
     }
 
     /**

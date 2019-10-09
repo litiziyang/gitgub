@@ -35,7 +35,10 @@ Route::get('/banner', 'BannerController@index');
 
 #commodity
 Route::get('/commodity/home', 'CommodityController@home');
-Route::get('/commodity', 'CommodityController@index');
+Route::apiResource('/commodity', 'CommodityController');
 
 #category
 Route::get('/category', 'CategoryController@index');
+
+#Cart
+Route::apiResource('/cart', 'CartController');
