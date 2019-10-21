@@ -19,7 +19,7 @@ class CategoryResource extends JsonResource
             'name'        => $this->name,
             'category_id' => $this->category_id,
             'child'       => CategoryResource::collection($this->child),
-            'image'       => $this->image ? env('COSV5_CDN') . '/' . $this->image->url : null,
+            'image'       => $this->image ? env('COSV5_CDN') .  $this->image->url : null,
         ];
     }
 }

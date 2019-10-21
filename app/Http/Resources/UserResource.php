@@ -16,7 +16,7 @@ class UserResource extends JsonResource
     {
         return [
             'name'     => $this->name,
-            'avatar'   => $this->avatar ? env('COSV5_CDN', '') . '/' . $this->avatar->url : null,
+            'avatar'   => $this->avatar ? env('COSV5_CDN', '') . $this->avatar->url : null,
             'phone'    => $this->phone,
             'integral' => $this->integral,
             'balance'  => $this->balance,

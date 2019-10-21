@@ -16,7 +16,7 @@ class BannerResource extends JsonResource
     {
         return [
             'id'     => $this->id,
-            'url'    => $this->image ? env('COSV5_CDN', '') . '/' . $this->image->url : null,
+            'url'    => $this->image ? env('COSV5_CDN', '')  . $this->image->url : null,
             'target' => $this->target,
             'level'  => $this->level,
             'color'  => $this->color,

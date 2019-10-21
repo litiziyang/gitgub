@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Activity;
 use App\Banner;
+use App\Cart;
 use App\Category;
 use App\Comment;
 use App\Commodity;
@@ -38,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
             'user'      => User::class,
             'commodity' => Commodity::class,
             'category'  => Category::class,
+            'cart'      => Cart::class,
         ]);
     }
 }

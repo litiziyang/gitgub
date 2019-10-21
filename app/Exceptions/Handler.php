@@ -49,6 +49,13 @@ class Handler extends ExceptionHandler
     {
         // return parent::render($request, $exception);
         // DB::rollBack();
-        return response()->json(['code' => 2333, 'msg' => $exception->getMessage()], 400);
+        $exceptionMessage = $exception->getMessage();
+        switch($exceptionMessage){
+            case 'This action is unauthorized.':
+                $exceptionMessage = '权限不足';
+                break;
+            default:break;
+        }
+        return response()->json(['code' => 400, 'msg' => $exceptionMessage], 400);
     }
 }
