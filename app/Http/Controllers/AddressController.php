@@ -7,14 +7,20 @@ use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt', ['except' => []]);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
+        $addresses = Address::where('user_id', $request->user_id)
+            ->get();
+        
     }
 
     /**

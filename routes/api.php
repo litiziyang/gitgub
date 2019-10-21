@@ -43,3 +43,6 @@ Route::get('/category', 'CategoryController@index');
 #Cart
 Route::delete('/cart/destoryAll', 'CartController@destoryAll');
 Route::apiResource('/cart', 'CartController');
+
+#Address
+Route::apiResource('/address', 'AddressController');

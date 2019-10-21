@@ -79,6 +79,11 @@ class User extends Authenticatable
         return $this->hasMany(Cart::class, 'user_id', 'id');
     }
 
+    public function defaultAddress()
+    {
+        return $this->hasOne(Address::class, 'default_address_id', 'id');
+    }
+
     /**
      * 获取Token
      * 默认过期时间1小时
