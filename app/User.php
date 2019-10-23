@@ -3,11 +3,65 @@
 namespace App;
 
 use EasyWeChat\Factory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 
+/**
+ * App\User
+ *
+ * @property int                                                        $id
+ * @property string|null                                                $name
+ * @property Carbon|null                                                $email_verified_at
+ * @property string|null                                                $remember_token
+ * @property Carbon|null                                                $created_at
+ * @property Carbon|null                                                $updated_at
+ * @property string|null                                                $phone              手机号
+ * @property int                                                        $integral           积分
+ * @property float                                                      $balance            余额
+ * @property string                                                     $member_type        会员类型 0非会员
+ * @property string|null                                                $open_id            微信的ID
+ * @property int|null                                                   $default_address_id 默认地址ID
+ * @property-read Collection|Address[]                                  $addresses
+ * @property-read int|null                                              $addresses_count
+ * @property-read Image                                                 $avatar
+ * @property-read Collection|Cart[]                                     $carts
+ * @property-read int|null                                              $carts_count
+ * @property-read Collection|Comment[]                                  $comments
+ * @property-read int|null                                              $comments_count
+ * @property-read Collection|Coupon[]                                   $coupons
+ * @property-read int|null                                              $coupons_count
+ * @property-read Address                                               $defaultAddress
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
+ * @property-read int|null                                              $notifications_count
+ * @property-read Collection|Order[]                                    $orders
+ * @property-read int|null                                              $orders_count
+ * @property-read Collection|Record[]                                   $records
+ * @property-read int|null                                              $records_count
+ * @property-read Collection|Star[]                                     $stars
+ * @property-read int|null                                              $stars_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereBalance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereDefaultAddressId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereIntegral($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereMemberType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereOpenId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -91,14 +145,13 @@ class User extends Authenticatable
     public function getToken()
     {
         $token = (new Builder())
-            ->setIssuer('https://www.leisite.com')
-            ->setAudience('https://www.leisite.com')
-            ->setIssuedAt(time())
-            ->setExpiration(time() + env('JWTTIME', 3600))
-            ->set('id', $this->id)
-            ->sign(new Sha256(), config('app.jwt.secret'))
-            ->getToken();
-        return (string) $token;
+            ->issuedBy('https://www.leisite.com')
+            ->permittedFor('https://www.leisite.com')
+            ->IssuedAt(time())
+            ->expiresAt(time() + env('JWTTIME', 3600))
+            ->withClaim('id', $this->id)
+            ->getToken(new Sha256(), config('app.jwt.secret'));
+        return (string)$token;
     }
 
     public static function getWechatApp()
