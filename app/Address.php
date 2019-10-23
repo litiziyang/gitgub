@@ -12,6 +12,8 @@ class Address extends Model
         'phone',
         'address',
         'description',
+        'longitude',
+        'latitide',
     ];
 
     public function user()

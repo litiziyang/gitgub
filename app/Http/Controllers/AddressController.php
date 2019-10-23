@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Http\Resources\AddressResource;
 use Illuminate\Http\Request;
+use Validator;
 
 class AddressController extends Controller
 {
@@ -20,7 +22,7 @@ class AddressController extends Controller
     {
         $addresses = Address::where('user_id', $request->user_id)
             ->get();
-        
+        return $this->success(AddressResource::collection($addresses));
     }
 
     /**
@@ -41,7 +43,22 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'name'        => 'required|string',
+            'phone'       => 'required|min:11',
+            'address'     => 'required|string',
+            'description' => 'required|string',
+            'longitude'   => 'sometimes|string',
+            'latitide'    => 'sometimes|string',
+        ]);
+        if ($validator->fails()) {
+            return $this->validate();
+        }
+
+        $data->user_id = $request->user_id;
+        Address::Create();
     }
 
     /**
