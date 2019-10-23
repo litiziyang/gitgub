@@ -7,7 +7,10 @@ use App\Commodity;
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\CartResource;
 use App\Image;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Validator;
 
 class CartController extends Controller
@@ -17,10 +20,11 @@ class CartController extends Controller
     {
         $this->middleware('jwt', ['except' => []]);
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -33,7 +37,7 @@ class CartController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -43,8 +47,9 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -56,9 +61,9 @@ class CartController extends Controller
         if ($validator->fails()) {
             return $this->validate();
         }
-        $id        = $data['id'];
+        $id = $data['id'];
         $commodity = Commodity::with('bannerImages')->findOrFail($id);
-        $cart      = Cart::firstOrNew([
+        $cart = Cart::firstOrNew([
             'commodity_id' => $commodity->id,
             'user_id'      => $request->user_id,
         ]);
@@ -81,8 +86,9 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
+     * @param Cart $cart
+     *
+     * @return Response
      */
     public function show(Cart $cart)
     {
@@ -92,8 +98,9 @@ class CartController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
+     * @param Cart $cart
+     *
+     * @return Response
      */
     public function edit(Cart $cart)
     {
@@ -103,13 +110,15 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Cart    $cart
+     *
+     * @return BaseResource
+     * @throws ValidationException
      */
     public function update(Request $request, Cart $cart)
     {
-        $data      = $request->all();
+        $data = $request->all();
         $validator = Validator::make($data, [
             'count' => 'required|integer|min:1',
         ]);
@@ -124,19 +133,23 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
+     * @param Cart    $cart
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     * @throws Exception
      */
     public function destroy(Cart $cart, Request $request)
     {
-        if ($cart->user_id != $request->user_id) {
+        if ($cart->user_id != $request['user_id']) {
             return $this->permission();
         }
         $cart->delete();
         return $this->success();
     }
 
-    public function destoryAll(Request $request)
+    public function destroyAll(Request $request)
     {
         Cart::where('user_id', $request->user_id)
             ->delete();

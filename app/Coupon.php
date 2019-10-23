@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -28,7 +29,7 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Coupon whereOffer($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Coupon whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Coupon whereUserId($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class Coupon extends Model
 {

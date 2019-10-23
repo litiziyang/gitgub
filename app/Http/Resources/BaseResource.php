@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BaseResource extends JsonResource
@@ -13,15 +14,17 @@ class BaseResource extends JsonResource
 
     public function __construct($code, $msg, $data = null)
     {
+        parent::__construct($this->resource);
         $this->code = $code;
-        $this->msg  = $msg;
+        $this->msg = $msg;
         $this->data = $data;
     }
 
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
+     *
      * @return array
      */
     public function toArray($request)

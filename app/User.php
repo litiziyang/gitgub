@@ -3,6 +3,7 @@
 namespace App;
 
 use EasyWeChat\Factory;
+use Eloquent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
@@ -11,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key;
 
 /**
  * App\User
@@ -60,7 +62,7 @@ use Lcobucci\JWT\Signer\Hmac\Sha256;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class User extends Authenticatable
 {
@@ -140,17 +142,17 @@ class User extends Authenticatable
 
     /**
      * 获取Token
-     * 默认过期时间1小时
+     * @return string Token
      */
-    public function getToken()
+    public function getToken(): string
     {
         $token = (new Builder())
             ->issuedBy('https://www.leisite.com')
             ->permittedFor('https://www.leisite.com')
             ->IssuedAt(time())
-            ->expiresAt(time() + env('JWTTIME', 3600))
+            ->expiresAt(time() + config('app.jwt.time'))
             ->withClaim('id', $this->id)
-            ->getToken(new Sha256(), config('app.jwt.secret'));
+            ->getToken(new Sha256(), new Key(config('app.jwt.secret')));
         return (string)$token;
     }
 

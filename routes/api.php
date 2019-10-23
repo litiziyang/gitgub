@@ -17,7 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/address', 'AddressController');
 Route::post('/loginCommit', 'UserController@commit');
 Route::post('/loginVerify', 'UserController@verify');
 Route::post('/loginWechat', 'UserController@wechat');
@@ -41,8 +40,8 @@ Route::apiResource('/commodity', 'CommodityController');
 Route::get('/category', 'CategoryController@index');
 
 #Cart
-Route::delete('/cart/destoryAll', 'CartController@destoryAll');
+Route::delete('/cart/destroyAll', 'CartController@destroyAll');
 Route::apiResource('/cart', 'CartController');
 
 #Address
-Route::apiResource('/address', 'AddressController');
+Route::apiResource('/address', 'AddressController', ['only' => ['index', 'store']]);

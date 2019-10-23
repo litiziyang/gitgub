@@ -17,33 +17,26 @@ class UserController extends Controller
     {
         $this->middleware('jwt', ['except' => ['commit', 'verify', 'wechat']]);
     }
+
     /**
-     * Display a listing of the resource.
+     * 获取用户信息.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return BaseResource
      */
     public function index(Request $request)
     {
         $user = User::with('avatar')
-            ->findOrFail($request->user_id);
+            ->findOrFail($request['user_id']);
         return new BaseResource(0, '', new UserResource($user));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -53,28 +46,17 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        $data      = $request->all();
+        $data = $request->all();
         $validator = Validator::make($data, [
             'name' => 'required|min:2|max:12',
         ]);
         if ($validator->fails()) {
             return new BaseResource(400, '昵称为2到12位的中英文数字组合', $validator->errors());
         }
-        $user       = User::findOrFail($request->user_id);
+        $user = User::findOrFail($request['user_id']);
         $user->name = $data['name'];
         $user->save();
         return new BaseResource(0, '更新成功');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function commit(Request $request)
@@ -104,9 +86,9 @@ class UserController extends Controller
         if ($validator->fails()) {
             return new BaseResource(400, '参数错误');
         }
-        $data  = $request->all();
+        $data = $request->all();
         $phone = $data['phone'];
-        $code  = $data['code'];
+        $code = $data['code'];
 
         if (Cache::get($phone) == $code) {
             Cache::forget($phone);
@@ -139,8 +121,8 @@ class UserController extends Controller
         }
         $data = $request->all();
         $code = $data['code'];
-        $app  = User::getWechatApp();
-        $res  = $app->auth->session($code);
+        $app = User::getWechatApp();
+        $res = $app->auth->session($code);
         if (!$res['openid']) {
             return new BaseResource(-1, '微信授权登录失败，请使用手机号或稍后再试');
         } else {
