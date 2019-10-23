@@ -4,42 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\Http\Resources\AddressResource;
+use App\Http\Resources\BaseResource;
+use App\Services\AddressService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Validator;
 
 class AddressController extends Controller
 {
-    public function __construct()
+    protected $addressService;
+
+    public function __construct(AddressService $addressService)
     {
         $this->middleware('jwt', ['except' => []]);
+        $this->addressService = $addressService;
     }
+
     /**
-     * Display a listing of the resource.
+     * 获取地址列表.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return BaseResource
      */
     public function index(Request $request)
     {
-        $addresses = Address::where('user_id', $request->user_id)
+        $addresses = Address::where('user_id', $request['user_id'])
             ->get();
         return $this->success(AddressResource::collection($addresses));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 新增地址.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * @param Request $request
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return BaseResource
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
@@ -51,44 +53,36 @@ class AddressController extends Controller
             'address'     => 'required|string',
             'description' => 'required|string',
             'longitude'   => 'sometimes|string',
-            'latitide'    => 'sometimes|string',
+            'latitude'    => 'sometimes|string',
         ]);
         if ($validator->fails()) {
             return $this->validate();
         }
 
-        $data->user_id = $request->user_id;
-        Address::Create();
+        $data['user_id'] = $request['user_id'];
+        $address = $this->addressService->create($data);
+        return $this->success($address);
     }
 
     /**
-     * Display the specified resource.
+     * 获取单个地址
      *
-     * @param  \App\Address  $address
-     * @return \Illuminate\Http\Response
+     * @param Address $address
+     *
+     * @return BaseResource
      */
     public function show(Address $address)
     {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Address  $address
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Address $address)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Address  $address
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Address $address
+     *
+     * @return Response
      */
     public function update(Request $request, Address $address)
     {
@@ -98,8 +92,9 @@ class AddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Address  $address
-     * @return \Illuminate\Http\Response
+     * @param Address $address
+     *
+     * @return Response
      */
     public function destroy(Address $address)
     {
