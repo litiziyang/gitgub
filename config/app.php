@@ -13,7 +13,7 @@ return [
     |
      */
 
-    'name'            => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
      */
 
-    'env'             => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return [
     |
      */
 
-    'debug'           => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,9 +52,9 @@ return [
     |
      */
 
-    'url'             => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url'       => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
     |
      */
 
-    'timezone'        => 'Asia/Shanghai',
+    'timezone' => 'Asia/Shanghai',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
      */
 
-    'locale'          => 'zh-CN',
+    'locale' => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ return [
     |
      */
 
-    'faker_locale'    => 'en_US',
+    'faker_locale' => 'en_US',
 
     /*
     |--------------------------------------------------------------------------
@@ -119,9 +119,9 @@ return [
     |
      */
 
-    'key'             => env('APP_KEY'),
+    'key' => env('APP_KEY'),
 
-    'cipher'          => 'AES-256-CBC',
+    'cipher' => 'AES-256-CBC',
 
     /*
     |--------------------------------------------------------------------------
@@ -134,7 +134,7 @@ return [
     |
      */
 
-    'providers'       => [
+    'providers' => [
 
         /*
          * Laravel Framework Service Providers...
@@ -188,7 +188,7 @@ return [
     |
      */
 
-    'aliases'         => [
+    'aliases' => [
 
         'App'          => Illuminate\Support\Facades\App::class,
         'Arr'          => Illuminate\Support\Arr::class,
@@ -228,7 +228,13 @@ return [
 
     ],
 
-    'jwt'             => [
+    'jwt' => [
         'secret' => env('JWTKEY', 'f12hfJPhEy^CAO23eMlh1ATl&vcFd*AW'),
+        'time'   => env('JWT_TIME', 3600),
     ],
+
+
+    'cos' => [
+        'cdn' => env('COSV5_CDN', ''),
+    ]
 ];
