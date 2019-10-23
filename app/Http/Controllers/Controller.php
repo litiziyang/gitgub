@@ -17,9 +17,9 @@ class Controller extends BaseController
         return new BaseResource(403, '权限不足');
     }
 
-    public function success(): BaseResource
+    public function success($data = null): BaseResource
     {
-        return new BaseResource(0, '');
+        return new BaseResource(0, '', $data);
     }
 
     public function validate(): BaseResource
