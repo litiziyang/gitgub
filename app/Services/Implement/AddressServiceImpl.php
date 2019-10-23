@@ -13,9 +13,9 @@ class AddressServiceImpl implements AddressService
 
     protected $addressRepository;
 
-    public function __construct(AddressRepository $addressRepository)
+    public function __construct(Address $address)
     {
-        $this->addressRepository = $addressRepository;
+        $this->addressRepository = $address->query();
     }
 
     /**

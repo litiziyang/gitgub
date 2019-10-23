@@ -8,8 +8,6 @@ use App\Cart;
 use App\Category;
 use App\Comment;
 use App\Commodity;
-use App\Repositories\AddressRepository;
-use App\Repositories\Implement\AddressRepositoryImpl;
 use App\Services\AddressService;
 use App\Services\Implement\AddressServiceImpl;
 use App\User;
@@ -25,10 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(AddressRepository::class, AddressRepositoryImpl::class);
         $this->app->bind(AddressService::class, AddressServiceImpl::class);
-
-
     }
 
     /**

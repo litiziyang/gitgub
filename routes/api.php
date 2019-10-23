@@ -12,11 +12,6 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('/loginCommit', 'UserController@commit');
 Route::post('/loginVerify', 'UserController@verify');
 Route::post('/loginWechat', 'UserController@wechat');
@@ -44,4 +39,4 @@ Route::delete('/cart/destroyAll', 'CartController@destroyAll');
 Route::apiResource('/cart', 'CartController');
 
 #Address
-Route::apiResource('/address', 'AddressController', ['only' => ['index', 'store']]);
+Route::apiResource('/address', 'AddressController');

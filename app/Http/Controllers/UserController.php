@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\UserResource;
 use App\User;
+use EasyWeChat\Kernel\Exceptions\InvalidConfigException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
+use Cache;
+use Storage;
 use Validator;
 
 class UserController extends Controller
@@ -37,7 +38,7 @@ class UserController extends Controller
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function show($id)
     {
@@ -79,14 +80,14 @@ class UserController extends Controller
 
     public function verify(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $data = $request->all();
+        $validator = Validator::make($data, [
             'phone' => 'required',
             'code'  => 'required',
         ]);
         if ($validator->fails()) {
             return new BaseResource(400, '参数错误');
         }
-        $data = $request->all();
         $phone = $data['phone'];
         $code = $data['code'];
 
@@ -110,16 +111,24 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 微信登录接口
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     * @throws InvalidConfigException
+     */
     public function wechat(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $data = $request->all();
+        $validator = Validator::make($data, [
             'code'  => 'required',
             'phone' => 'required',
         ]);
         if ($validator->fails()) {
             return new BaseResource(400, '参数错误');
         }
-        $data = $request->all();
         $code = $data['code'];
         $app = User::getWechatApp();
         $res = $app->auth->session($code);
