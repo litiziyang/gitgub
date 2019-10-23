@@ -11,6 +11,9 @@
 |
 */
 
+use App\Http\Resources\BaseResource;
+
 Route::get('/', function () {
-    return view('welcome');
+//    return view('welcome');
+    return new BaseResource(404, 'not found');
 });
