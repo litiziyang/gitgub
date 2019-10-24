@@ -30,6 +30,7 @@ class AddressResource extends JsonResource
             'description' => $this->description,
             'longitude'   => $this->longitude,
             'latitude'    => $this->latitude,
+            'default'     => $this->user->default_address_id === $this->id
         ];
     }
 }

@@ -10,6 +10,8 @@ use App\Comment;
 use App\Commodity;
 use App\Services\AddressService;
 use App\Services\Implement\AddressServiceImpl;
+use App\Services\Implement\UserServiceImpl;
+use App\Services\UserService;
 use App\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(AddressService::class, AddressServiceImpl::class);
+        $this->app->bind(UserService::class, UserServiceImpl::class);
     }
 
     /**

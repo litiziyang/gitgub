@@ -6,6 +6,8 @@ use App\Address;
 use App\Http\Resources\AddressResource;
 use App\Http\Resources\BaseResource;
 use App\Services\AddressService;
+use App\Services\UserService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -14,11 +16,13 @@ use Validator;
 class AddressController extends Controller
 {
     protected $addressService;
+    protected $userService;
 
-    public function __construct(AddressService $addressService)
+    public function __construct(AddressService $addressService, UserService $userService)
     {
         $this->middleware('jwt', ['except' => []]);
         $this->addressService = $addressService;
+        $this->userService = $userService;
     }
 
     /**
@@ -42,6 +46,7 @@ class AddressController extends Controller
      *
      * @return BaseResource
      * @throws ValidationException
+     * @throws Exception
      */
     public function store(Request $request)
     {
@@ -52,28 +57,35 @@ class AddressController extends Controller
             'phone'       => 'required|min:11',
             'address'     => 'required|string',
             'description' => 'required|string',
-            'longitude'   => 'sometimes|string',
-            'latitude'    => 'sometimes|string',
+            'longitude'   => 'required',
+            'latitude'    => 'required',
+            'default'     => 'required'
         ]);
         if ($validator->fails()) {
             return $this->validate();
         }
 
         $data['user_id'] = $request['user_id'];
+        \DB::beginTransaction();
         $address = $this->addressService->create($data);
+        if ($data['default'] == true) {
+            $this->userService->setDefaultAddress($address->id);
+        }
+        \DB::commit();
         return $this->success($address);
     }
 
     /**
      * 获取单个地址
      *
-     * @param Address $address
+     * @param $id
      *
      * @return BaseResource
      */
-    public function show(Address $address)
+    public function show($id)
     {
-
+        $address = $this->addressService->find($id);
+        return $this->success(new AddressResource($address));
     }
 
     /**
@@ -82,11 +94,33 @@ class AddressController extends Controller
      * @param Request $request
      * @param Address $address
      *
-     * @return Response
+     * @return BaseResource
+     * @throws ValidationException
      */
     public function update(Request $request, Address $address)
     {
-        //
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'name'        => 'required|string',
+            'phone'       => 'required|min:11',
+            'address'     => 'required|string',
+            'description' => 'required|string',
+            'longitude'   => 'required',
+            'latitude'    => 'required',
+            'default'     => 'required'
+        ]);
+        if ($validator->fails()) {
+            return $this->validate();
+        }
+        if ($address->user_id != $request->user_id) {
+            return $this->permission();
+        }
+        $this->addressService->update($data, $address);
+        if ($data['default'] == true) {
+            $this->userService->setDefaultAddress($address->id);
+        }
+        return $this->success();
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\UserResource;
+use App\Services\UserService;
 use App\User;
 use EasyWeChat\Kernel\Exceptions\InvalidConfigException;
 use Illuminate\Http\Request;
@@ -13,14 +14,16 @@ use Validator;
 
 class UserController extends Controller
 {
+    protected $userService;
 
-    public function __construct()
+    public function __construct(UserService $userService)
     {
+        $this->userService = $userService;
         $this->middleware('jwt', ['except' => ['commit', 'verify', 'wechat']]);
     }
 
     /**
-     * 获取用户信息.
+     * 获取自身信息.
      *
      * @param Request $request
      *
@@ -28,23 +31,28 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $user = User::with('avatar')
-            ->findOrFail($request['user_id']);
+        $user = $this->userService->getInfo($request->user_id);
         return new BaseResource(0, '', new UserResource($user));
     }
 
     /**
-     * Display the specified resource.
+     * 获取他人信息.
      *
      * @param int $id
      *
-     * @return void
+     * @return BaseResource
      */
     public function show($id)
     {
-        //
+        $user = $this->userService->getInfo($id);
+        return new BaseResource(0, '', new UserResource($user));
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
     public function update(Request $request)
     {
         $data = $request->all();
@@ -62,13 +70,14 @@ class UserController extends Controller
 
     public function commit(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $data = $request->all();
+        $validator = Validator::make($data, [
             'phone' => 'required',
         ]);
         if ($validator->fails()) {
             return new BaseResource(400, '参数错误');
         }
-        $data = $request->all();
+
 
         if (Cache::has($data['phone'])) {
             return new BaseResource(-1, '60秒内仅能获取一次验证码');
