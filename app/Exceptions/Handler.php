@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class Handler extends ExceptionHandler
@@ -30,8 +32,10 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param Exception $exception
+     *
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -41,21 +45,25 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @param Request   $request
+     * @param Exception $exception
+     *
+     * @return Response
+     * @throws Exception
      */
     public function render($request, Exception $exception)
     {
         // return parent::render($request, $exception);
         // DB::rollBack();
         $exceptionMessage = $exception->getMessage();
-        switch($exceptionMessage){
+        switch ($exceptionMessage) {
             case 'This action is unauthorized.':
                 $exceptionMessage = '权限不足';
                 break;
-            default:break;
+            default:
+                break;
         }
+        \DB::rollBack();
         return response()->json(['code' => 400, 'msg' => $exceptionMessage], 400);
     }
 }
