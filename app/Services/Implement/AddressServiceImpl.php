@@ -5,7 +5,6 @@ namespace App\Services\Implement;
 
 
 use App\Address;
-use App\Repositories\AddressRepository;
 use App\Services\AddressService;
 
 class AddressServiceImpl implements AddressService
@@ -28,5 +27,31 @@ class AddressServiceImpl implements AddressService
     public function create(array $address): Address
     {
         return $this->addressRepository->create($address);
+    }
+
+    /**
+     * 获取单个地址
+     *
+     * @param integer $id 地址ID
+     *
+     * @return Address 获取的实例
+     */
+    public function find($id): Address
+    {
+        return $this->addressRepository->with('user')
+            ->findOrFail($id);
+    }
+
+    /**
+     * 更新地址
+     *
+     * @param array   $newAddress 新的地址内容
+     * @param Address $oldAddress 旧的地址实例
+     *
+     * @return boolean 是否成功
+     */
+    public function update(array $newAddress, Address $oldAddress): bool
+    {
+        return $oldAddress->update($newAddress);
     }
 }
