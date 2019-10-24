@@ -22,8 +22,8 @@ class Controller extends BaseController
         return new BaseResource(0, '', $data);
     }
 
-    public function validate(): BaseResource
+    public function validate($data = null): BaseResource
     {
-        return new BaseResource(400, '参数错误');
+        return new BaseResource(400, '参数错误', $data);
     }
 }
