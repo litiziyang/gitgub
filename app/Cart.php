@@ -20,6 +20,7 @@ use Illuminate\Support\Carbon;
  * @property string         $price        冗余字段 - 价格
  * @property-read Commodity $commodity
  * @property-read User      $user
+ * @property-read Image     $image
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Cart newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Cart newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Cart query()
@@ -51,5 +52,10 @@ class Cart extends Model
     public function commodity()
     {
         return $this->hasOne(Commodity::class, 'id', 'commodity_id');
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'image');
     }
 }

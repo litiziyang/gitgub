@@ -24,7 +24,9 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @param Request $request
+     *
+     * @return BaseResource
      */
     public function index(Request $request)
     {
@@ -37,7 +39,7 @@ class CartController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return void
      */
     public function create()
     {
@@ -49,7 +51,8 @@ class CartController extends Controller
      *
      * @param Request $request
      *
-     * @return Response
+     * @return BaseResource
+     * @throws ValidationException
      */
     public function store(Request $request)
     {

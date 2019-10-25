@@ -76,7 +76,7 @@ class AddressController extends Controller
     }
 
     /**
-     * 获取单个地址
+     * 获取单个地址.
      *
      * @param $id
      *
@@ -89,7 +89,7 @@ class AddressController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 更新地址.
      *
      * @param Request $request
      * @param Address $address
