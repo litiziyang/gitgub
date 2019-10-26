@@ -138,7 +138,7 @@ class User extends Authenticatable
 
     public function defaultAddress()
     {
-        return $this->hasOne(Address::class, 'default_address_id', 'id');
+        return $this->hasOne(Address::class, 'id', 'default_address_id');
     }
 
     /**
@@ -160,8 +160,8 @@ class User extends Authenticatable
     public static function getWechatApp()
     {
         $config = [
-            'app_id'        => env('WECHAT_APPID', ''),
-            'secret'        => env('WECHAT_SECRET', ''),
+            'app_id'        => config('app.wechat.appid'),
+            'secret'        => config('app.wechat.secret'),
             'response_type' => 'array',
             'log'           => [
                 'level' => 'debug',

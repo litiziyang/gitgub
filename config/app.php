@@ -236,5 +236,10 @@ return [
 
     'cos' => [
         'cdn' => env('COSV5_CDN', ''),
+    ],
+
+    'wechat' => [
+        'appid'  => env('WECHAT_APPID', ''),
+        'secret' => env('WECHAT_SECRET', '')
     ]
 ];
