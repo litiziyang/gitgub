@@ -10,14 +10,24 @@ use Illuminate\Support\Carbon;
  * App\Order
  *
  * @property int              $id
- * @property int              $number 订单编号编号
+ * @property int              $number         订单编号编号
  * @property int|null         $transaction_id 交易编号
- * @property int              $user_id 用户ID
- * @property string           $state 订单状态
+ * @property int              $user_id        用户ID
+ * @property string           $state          订单状态
+ * @property float            $reward         奖励金额
+ * @property float            $price          价格
+ * @property string           $address        地址
+ * @property string           $name           名字
+ * @property string           $phone          电话
+ * @property string           $remarks        备注
+ * @property string           $description    详细地址
+ * @property string           $longitude      经度
+ * @property string           $latitude       纬度
  * @property Carbon|null      $created_at
  * @property Carbon|null      $updated_at
  * @property-read Transaction $transaction
  * @property-read User        $user
+ * @property-read Coupon      $coupon
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Order newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Order query()
@@ -33,20 +43,31 @@ use Illuminate\Support\Carbon;
 class Order extends Model
 {
     protected $fillable = [
-        'number',
         'user_id',
-        'state',
-        'transaction_id',
-        'reward',
+        'coupon_id',
+        'number',
+        'price',
+        'name',
+        'address',
+        'phone',
+        'description',
+        'remarks',
+        'longitude',
+        'latitude'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function transaction()
     {
         return $this->hasOne(Transaction::class, 'id', 'transaction_id');
+    }
+
+    public function coupon()
+    {
+        return $this->hasOne(Coupon::class, 'coupon_id', 'id');
     }
 }

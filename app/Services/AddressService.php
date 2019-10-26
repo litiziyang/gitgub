@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Address;
+use App\User;
 
 interface AddressService
 {
@@ -11,7 +12,7 @@ interface AddressService
      *
      * @param array $address 地址内容
      *
-     * @return Address 创建的实例
+     * @return Address
      */
     public function create(array $address): Address;
 
@@ -20,7 +21,7 @@ interface AddressService
      *
      * @param integer $id 地址ID
      *
-     * @return Address 获取的实例
+     * @return Address
      */
     public function find($id): Address;
 
@@ -32,5 +33,14 @@ interface AddressService
      *
      * @return boolean 是否成功
      */
-    public function update(array $newAddress, Address $oldAddress): bool ;
+    public function update(array $newAddress, Address $oldAddress): bool;
+
+    /**
+     * 获取默认地址
+     *
+     * @param User $user 用户
+     *
+     * @return Address
+     */
+    public function default($user): Address;
 }

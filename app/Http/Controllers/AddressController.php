@@ -134,4 +134,18 @@ class AddressController extends Controller
     {
         //
     }
+
+    /**
+     * 获取默认地址
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
+    public function default(Request $request)
+    {
+        $user = $this->userService->getInfo($request->user_id);
+        $defaultAddress = $this->addressService->default($user);
+        return $this->success(new AddressResource($defaultAddress));
+    }
 }

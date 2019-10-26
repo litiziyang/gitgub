@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BaseResource;
 use App\Image;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -15,6 +16,7 @@ class ImageController extends Controller
     {
         $this->middleware('jwt', ['except' => []]);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +30,8 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -38,7 +41,8 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Image  $image
+     * @param \App\Image $image
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Image $image)
@@ -49,8 +53,9 @@ class ImageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Image  $image
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Image               $image
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Image $image)
@@ -61,7 +66,8 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Image  $image
+     * @param \App\Image $image
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Image $image)
@@ -69,6 +75,12 @@ class ImageController extends Controller
         //
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return BaseResource
+     * @throws Exception
+     */
     public function avatar(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -78,9 +90,11 @@ class ImageController extends Controller
             return new BaseResource(400, '参数错误');
         }
         $data = $request->all();
-        $url  = $data['url'];
+        $url = $data['url'];
         $user = User::findOrFail($request->user_id);
-        $user->avatar->delete();
+        if ($user->avatar) {
+            $user->avatar->delete();
+        }
         Image::firstOrCreate([
             'url'        => $url,
             'image_type' => 'user',

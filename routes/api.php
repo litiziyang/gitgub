@@ -29,7 +29,8 @@ Route::get('/banner', 'BannerController@index');
 
 #commodity
 Route::get('/commodity/home', 'CommodityController@home');
-Route::apiResource('/commodity', 'CommodityController');
+Route::post('/commodity/commodities', 'CommodityController@commodities');
+Route::apiResource('/commodity', 'CommodityController', ['only' => ['index', 'show']]);
 
 #category
 Route::get('/category', 'CategoryController@index');
@@ -39,4 +40,8 @@ Route::delete('/cart/destroyAll', 'CartController@destroyAll');
 Route::apiResource('/cart', 'CartController');
 
 #Address
+Route::get('/address/default', 'AddressController@default');
 Route::apiResource('/address', 'AddressController');
+
+#Order
+Route::apiResource('/order', 'OrderController');

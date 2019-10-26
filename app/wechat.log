@@ -382,3 +382,19 @@ Content-Length: 100
 {"session_key":"4YcpTnd09Cit+pOD9Iu25A==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
 --------
 NULL  
+[2019-10-26T20:41:43.047889+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=26__hAlVaha4mgM0dfL3cHSKPOc_Q88eFfd9X0cof8uQmkhQ5iZ0zIwGYKWVHQDJde22qcJx9VGidPTL2266aH0iaPVVu3cGjR1wAp3XqeqSa1JsYUGmGKF9a7MKp3wJjIyTgaOLO4f1rAzB-fRBIBiADAXEX&appid=wx9fb2133a73c8aeb6&secret=83466be69aa9a1f1a8ca0fc8561b9df9&js_code=071vZ5RZ0X47pY1tBQRZ0xhkRZ0vZ5RZ&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.65.3 PHP/7.2.22
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Sat, 26 Oct 2019 12:41:42 GMT
+Content-Length: 101
+
+{"session_key":"nl\/Wy1v1UB0OSutnVABLRg==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
+--------
+NULL  

@@ -6,6 +6,7 @@ namespace App\Services\Implement;
 
 use App\Address;
 use App\Services\AddressService;
+use App\User;
 
 class AddressServiceImpl implements AddressService
 {
@@ -53,5 +54,21 @@ class AddressServiceImpl implements AddressService
     public function update(array $newAddress, Address $oldAddress): bool
     {
         return $oldAddress->update($newAddress);
+    }
+
+    /**
+     * 获取默认地址
+     *
+     * @param User $user 用户
+     *
+     * @return Address
+     */
+    public function default($user): Address
+    {
+        if ($user->defaultAddress) {
+            return $user->defaultAddress;
+        } else {
+            return $user->addresses->first();
+        }
     }
 }

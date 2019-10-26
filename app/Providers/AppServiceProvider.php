@@ -8,9 +8,14 @@ use App\Cart;
 use App\Category;
 use App\Comment;
 use App\Commodity;
+use App\OrderGood;
 use App\Services\AddressService;
+use App\Services\CommodityService;
 use App\Services\Implement\AddressServiceImpl;
+use App\Services\Implement\CommodityServiceImpl;
+use App\Services\Implement\OrderServiceImpl;
 use App\Services\Implement\UserServiceImpl;
+use App\Services\OrderService;
 use App\Services\UserService;
 use App\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -27,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(AddressService::class, AddressServiceImpl::class);
         $this->app->bind(UserService::class, UserServiceImpl::class);
+        $this->app->bind(OrderService::class, OrderServiceImpl::class);
+        $this->app->bind(CommodityService::class, CommodityServiceImpl::class);
     }
 
     /**
@@ -45,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
             'commodity' => Commodity::class,
             'category'  => Category::class,
             'cart'      => Cart::class,
+            'orderGood' => OrderGood::class,
         ]);
     }
 }

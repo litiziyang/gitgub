@@ -6,108 +6,90 @@ use App\Commodity;
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\CommodityDetailResource;
 use App\Http\Resources\CommodityResource;
+use App\Services\CommodityService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Validator;
 
 class CommodityController extends Controller
 {
+
+    protected $commodityService;
+
+    public function __construct(CommodityService $commodityService)
+    {
+        $this->middleware('jwt', ['except' => ['index', 'home', 'show']]);
+        $this->commodityService = $commodityService;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return BaseResource
      */
     public function index()
     {
         $commodities = Commodity::with('bannerImages');
         // ->where('count_stack', '>', '0');
         $category_id = request()->category_id;
-        $order_by    = request()->order_by;
-        $order_type  = request()->order_type;
+        $order_by = request()->order_by;
+        $order_type = request()->order_type;
 
         if ($category_id != null) {
             $commodities->where('category_id', $category_id);
         }
-        if ($order_by != null && $order_by != null) {
+        if ($order_by != null && $order_type != null) {
             $commodities->orderBy($order_by, $order_type);
         } else {
             $commodities->orderBy('count_sales', 'desc');
         }
         $commodities = $commodities->paginate(18);
-        return new BaseResource(0, '', CommodityResource::collection($commodities));
+        return $this->success(CommodityResource::collection($commodities));
     }
 
+    /**
+     * 获取Home界面的商品
+     * @return BaseResource
+     */
     public function home()
     {
         $commodities = Commodity::with('bannerImages')
-        // ->where('count_stack', '>', '0')
+            // ->where('count_stack', '>', '0')
             ->orderBy('count_sales', 'desc')
             ->take(18)
             ->get();
-        return new BaseResource(0, '', CommodityResource::collection($commodities));
+        return $this->success(CommodityResource::collection($commodities));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
+     * 获取单个商品.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * @param Commodity $commodity
      *
-     * @param  \App\Commodity  $commodity
-     * @return \Illuminate\Http\Response
+     * @return BaseResource
      */
     public function show(Commodity $commodity)
     {
-        return new BaseResource(0, '', new CommodityDetailResource($commodity));
+        return $this->success(new CommodityDetailResource($commodity));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param Request $request
      *
-     * @param  \App\Commodity  $commodity
-     * @return \Illuminate\Http\Response
+     * @return BaseResource
+     * @throws ValidationException
      */
-    public function edit(Commodity $commodity)
+    public function commodities(Request $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Commodity  $commodity
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Commodity $commodity)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Commodity  $commodity
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Commodity $commodity)
-    {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'commodities' => 'required|array',
+        ]);
+        if ($validator->fails()) {
+            return $this->validate();
+        }
+        $commodities = $this->commodityService->list($data['commodities']);
+        return $this->success(CommodityResource::collection($commodities));
     }
 }

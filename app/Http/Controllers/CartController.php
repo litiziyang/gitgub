@@ -80,7 +80,7 @@ class CartController extends Controller
         Image::create([
             'image_type' => 'cart',
             'image_id'   => $cart->id,
-            'url'        => $commodity->bannerImages[0],
+            'url'        => $commodity->bannerImages[0]->url,
         ]);
 
         return $this->success();
@@ -148,14 +148,25 @@ class CartController extends Controller
         if ($cart->user_id != $request['user_id']) {
             return $this->permission();
         }
+        $image = $cart->image;
+        if ($image) {
+            $image->delete();
+        }
         $cart->delete();
         return $this->success();
     }
 
     public function destroyAll(Request $request)
     {
-        Cart::where('user_id', $request->user_id)
-            ->delete();
+        $carts = Cart::where('user_id', $request->user_id)
+            ->get();
+        foreach ($carts as $cart) {
+            $image = $cart->image;
+            if ($image) {
+                $image->delete();
+            }
+            $cart->delete();
+        }
         return $this->success();
     }
 }
