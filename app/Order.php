@@ -3,31 +3,33 @@
 namespace App;
 
 use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
  * App\Order
  *
- * @property int              $id
- * @property int              $number         订单编号编号
- * @property int|null         $transaction_id 交易编号
- * @property int              $user_id        用户ID
- * @property string           $state          订单状态
- * @property float            $reward         奖励金额
- * @property float            $price          价格
- * @property string           $address        地址
- * @property string           $name           名字
- * @property string           $phone          电话
- * @property string           $remarks        备注
- * @property string           $description    详细地址
- * @property string           $longitude      经度
- * @property string           $latitude       纬度
- * @property Carbon|null      $created_at
- * @property Carbon|null      $updated_at
- * @property-read Transaction $transaction
- * @property-read User        $user
- * @property-read Coupon      $coupon
+ * @property int                         $id
+ * @property int                         $number         订单编号编号
+ * @property int|null                    $transaction_id 交易编号
+ * @property int                         $user_id        用户ID
+ * @property string                      $state          订单状态
+ * @property float                       $reward         奖励金额
+ * @property float                       $price          价格
+ * @property string                      $address        地址
+ * @property string                      $name           名字
+ * @property string                      $phone          电话
+ * @property string                      $remarks        备注
+ * @property string                      $description    详细地址
+ * @property string                      $longitude      经度
+ * @property string                      $latitude       纬度
+ * @property Carbon|null                 $created_at
+ * @property Carbon|null                 $updated_at
+ * @property-read Transaction            $transaction
+ * @property-read User                   $user
+ * @property-read Coupon                 $coupon
+ * @property-read Collection|OrderGood[] $orderGood
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Order newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Order query()
@@ -69,5 +71,10 @@ class Order extends Model
     public function coupon()
     {
         return $this->hasOne(Coupon::class, 'coupon_id', 'id');
+    }
+
+    public function orderGood()
+    {
+        return $this->hasMany(OrderGood::class, 'order_id', 'id');
     }
 }

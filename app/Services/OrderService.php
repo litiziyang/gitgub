@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Address;
 use App\Order;
@@ -21,4 +19,49 @@ interface OrderService
      * @todo 还未计算优惠返现这些
      */
     public function create(array $commodities, $user_id, $address, $remarks): Order;
+
+    /**
+     * 获取全部订单
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 全部订单
+     */
+    public function list($page);
+
+    /**
+     * 获取未付款订单列表
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 未付款订单列表
+     */
+    public function pendingPayment($page);
+
+    /**
+     * 获取待发货订单
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 待发货订单
+     */
+    public function beingProcessed($page);
+
+    /**
+     * 获取待收货订单
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 待收货订单
+     */
+    public function shipped($page);
+
+    /**
+     * 获取待评价订单
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 待评价订单
+     */
+    public function evaluate($page);
 }

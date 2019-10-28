@@ -79,6 +79,7 @@ class OrderServiceImpl implements OrderService
                 'pay'          => $commodity->price,
                 'order_id'     => $order->id,
                 'count'        => $good['count'],
+                'title'        => $commodity->title,
                 'reward'       => 0,
             ]);
             $commodity->count_stack -= $orderGood->count;
@@ -101,5 +102,88 @@ class OrderServiceImpl implements OrderService
         // TODO: 订单统计所有的优惠金额
         \DB::commit();
         return $order;
+    }
+
+    /**
+     * 获取全部订单
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 全部订单
+     */
+    public function list($page)
+    {
+        return $this->getList($page);
+    }
+
+    /**
+     * 获取未付款订单列表
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 未付款订单列表
+     */
+    public function pendingPayment($page)
+    {
+        return $this->getList($page, '0');
+    }
+
+    /**
+     * 获取待发货订单
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 待发货订单
+     */
+    public function beingProcessed($page)
+    {
+        return $this->getList($page, '1');
+    }
+
+    /**
+     * 获取待收货订单
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 待收货订单
+     */
+    public function shipped($page)
+    {
+        return $this->getList($page, '2');
+    }
+
+    /**
+     * 获取待评价订单
+     *
+     * @param integer $page 页码
+     *
+     * @return mixed 待评价订单
+     */
+    public function evaluate($page)
+    {
+        return $this->getList($page, '3');
+    }
+
+    /**
+     * 获取订单列表
+     *
+     * @param integer $page  页码
+     * @param string  $state 状态
+     *
+     * @return mixed 订单列表
+     */
+    private function getList($page, $state = null)
+    {
+        $builder = $this->orderRepository
+            ->with('orderGood.image');
+        if ($state != null) {
+            $builder->where('state', $state);
+        }
+        $builder->orderBy('id', 'desc');
+        $orders = $builder
+            ->offset((($page ?? 1) - 1) * 10)
+            ->limit(10)
+            ->get();
+        return $orders;
     }
 }

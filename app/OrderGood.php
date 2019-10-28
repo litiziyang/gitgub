@@ -18,6 +18,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null    $updated_at
  * @property-read Commodity $commodity
  * @property-read Order     $order
+ * @property-read Image     $image
  * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderGood newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderGood newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderGood query()
@@ -48,5 +49,10 @@ class OrderGood extends Model
     public function order()
     {
         return $this->belongsTo(Order::class, 'id', 'order_id');
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'image');
     }
 }

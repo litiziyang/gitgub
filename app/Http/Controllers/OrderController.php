@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BaseResource;
+use App\Http\Resources\OrderResource;
 use App\Order;
 use App\Services\AddressService;
 use App\Services\OrderService;
@@ -24,17 +25,47 @@ class OrderController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * 获取订单列表.
      *
-     * @return Response
+     * @param Request $request
+     *
+     * @return BaseResource
+     * @throws ValidationException
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'page'  => 'sometimes|integer',
+            'state' => 'sometimes|integer',
+        ]);
+        if ($validator->failed()) {
+            return $this->validate();
+        }
+        $state = $data['state'] ?? 10;
+        $page = $data['page'] ?? 1;
+        $orders = [];
+        switch ($state) {
+            case 10 :
+                $orders = $this->orderService->list($page);
+                break;
+            case 0:
+                $orders = $this->orderService->pendingPayment($page);
+                break;
+            case 1:
+                $orders = $this->orderService->shipped($page);
+                break;
+            case 2:
+                $orders = $this->orderService->evaluate($page);
+                break;
+            default:
+                break;
+        }
+        return $this->success(OrderResource::collection($orders));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 新增订单.
      *
      * @param Request $request
      *
@@ -47,7 +78,7 @@ class OrderController extends Controller
         $validator = Validator::make($data, [
             'commodities' => 'required|array',
             'address_id'  => 'required|integer',
-            'remarks'     => 'required|string'
+            'remarks'     => 'required|string',
         ]);
         if ($validator->failed()) {
             return $this->validate();
@@ -56,7 +87,7 @@ class OrderController extends Controller
         $order = $this->orderService->create($data['commodities'], $request->user_id, $address, $data['remarks']);
         return $this->success([
             'price' => $order->price,
-            'id'    => $order->id
+            'id'    => $order->id,
         ]);
     }
 
