@@ -89,7 +89,11 @@ class CommodityController extends Controller
         if ($validator->fails()) {
             return $this->validate();
         }
-        $commodities = $this->commodityService->list($data['commodities']);
+        if (sizeof($data['commodities']) > 1) {
+            $commodities = $this->commodityService->listByCart($data['commodities']);
+        } else {
+            $commodities = $this->commodityService->list($data['commodities'][0]);
+        }
         return $this->success(CommodityResource::collection($commodities));
     }
 }

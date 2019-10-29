@@ -18,91 +18,16 @@ class OrderServiceImpl implements OrderService
     protected $orderRepository;
     protected $orderGoodRepository;
     protected $commodityRepository;
+    protected $imageRepository;
 
-    public function __construct(Order $order, OrderGood $orderGood, Commodity $commodity)
+    public function __construct(Order $order, OrderGood $orderGood, Commodity $commodity, Image $image)
     {
         $this->orderRepository = $order->query();
         $this->orderGoodRepository = $orderGood->query();
         $this->commodityRepository = $commodity->query();
+        $this->imageRepository = $image->query();
     }
 
-    /**
-     * 创建订单
-     *
-     * @param array   $commodities 商品数组
-     * @param integer $user_id     用户ID
-     * @param Address $address     地址
-     * @param string  $remarks     备注
-     *
-     * @return Order 创建后的订单
-     * @throws Exception
-     */
-    public function create(array $commodities, $user_id, $address, $remarks): Order
-    {
-        \DB::beginTransaction();
-        $order = $this->orderRepository->create([
-            'number'      => Order::createOrderNo(),
-            'user_id'     => $user_id,
-            'price'       => 0,
-            'name'        => $address->name,
-            'phone'       => $address->phone,
-            'address'     => $address->address,
-            'description' => $address->description,
-            'remarks'     => $remarks,
-            'longitude'   => $address->longitude,
-            'latitude'    => $address->latitude,
-        ]);
-        $totalPrice = 0;
-        foreach ($commodities as $good) {
-            $cart = Cart::query()
-                ->with('image')
-                ->with('commodity')
-                ->where('state', '!=', '0')
-                ->findOrFail($good['id']);
-            if (!$cart) {
-                throw new Exception('商品不可用或购物车异常');
-            }
-            // 判断商品是否可以购买
-            $commodity = Commodity::query()->sharedLock()->find($cart->commodity_id);
-            if (!$commodity) {
-                // 购物车转为不可用
-                \DB::rollBack();
-                $cart->state = '0';
-                $cart->save();
-                throw new Exception('商品 ' . $cart->title . ' 不存在');
-            }
-            if ($commodity->count_stack < $good['count']) {
-                throw new Exception('商品 ' . $cart->title . ' 库存不足');
-            }
-            $orderGood = $this->orderGoodRepository->create([
-                'commodity_id' => $commodity->id,
-                'pay'          => $commodity->price,
-                'order_id'     => $order->id,
-                'count'        => $good['count'],
-                'title'        => $commodity->title,
-                'reward'       => 0,
-            ]);
-            $commodity->count_stack -= $orderGood->count;
-            $commodity->save();
-            Image::create([
-                'image_type' => 'orderGood',
-                'image_id'   => $orderGood->id,
-                'url'        => $commodity->bannerImages[0]->url
-            ]);
-            $totalPrice += $orderGood->pay * $orderGood->count;
-            // TODO: 订单商品奖励计算，每个商品的reward，根据用户评级能获得部分，满级用户能获得全部……
-
-            if ($cart->image) {
-                $cart->image->delete();
-            }
-            $cart->delete();
-        }
-        $order->price = $totalPrice;
-        $order->save();
-        // TODO: 订单统计所有的优惠金额
-        \DB::commit();
-        return $order;
-    }
 
     /**
      * 获取全部订单
@@ -186,4 +111,141 @@ class OrderServiceImpl implements OrderService
             ->get();
         return $orders;
     }
+
+    /**
+     * 立即购买创建订单
+     *
+     * @param mixed   $good    商品数组
+     * @param integer $user_id 用户ID
+     * @param Address $address 地址
+     * @param string  $remarks 备注
+     *
+     * @return Order 创建后的订单
+     * @throws Exception
+     */
+    public function createOne($good, $user_id, $address, $remarks): Order
+    {
+        \DB::beginTransaction();
+        $order = $this->orderRepository->create([
+            'number'      => Order::createOrderNo(),
+            'user_id'     => $user_id,
+            'price'       => 0,
+            'name'        => $address->name,
+            'phone'       => $address->phone,
+            'address'     => $address->address,
+            'description' => $address->description,
+            'remarks'     => $remarks,
+            'longitude'   => $address->longitude,
+            'latitude'    => $address->latitude,
+        ]);
+        $totalPrice = 0;
+        $commodity = $this->commodityRepository->sharedLock()->find($good['id']);
+        if (!$commodity) {
+            throw new Exception('商品不存在');
+        }
+        if ($commodity->count_stack < $good['count']) {
+            throw new Exception('商品库存不足');
+        }
+        $orderGood = $this->createOrderGood($commodity, $order->id, $good['count']);
+        $totalPrice += $orderGood->pay * $orderGood->count;
+        $order->price = $totalPrice;
+        $order->save();
+        // TODO: 订单统计所有的优惠金额
+        \DB::commit();
+        return $order;
+    }
+
+    /**
+     * 购物车创建多商品订单
+     *
+     * @param array   $commodities 商品数组
+     * @param integer $user_id     用户ID
+     * @param Address $address     地址
+     * @param string  $remarks     备注
+     *
+     * @return Order 创建后的订单
+     * @throws Exception
+     */
+    public function createByCart(array $commodities, $user_id, $address, $remarks): Order
+    {
+        \DB::beginTransaction();
+        $order = $this->orderRepository->create([
+            'number'      => Order::createOrderNo(),
+            'user_id'     => $user_id,
+            'price'       => 0,
+            'name'        => $address->name,
+            'phone'       => $address->phone,
+            'address'     => $address->address,
+            'description' => $address->description,
+            'remarks'     => $remarks,
+            'longitude'   => $address->longitude,
+            'latitude'    => $address->latitude,
+        ]);
+        $totalPrice = 0;
+        foreach ($commodities as $good) {
+            $cart = Cart::query()
+                ->with('image')
+                ->with('commodity')
+                ->where('state', '!=', '0')
+                ->findOrFail($good['id']);
+            if (!$cart) {
+                throw new Exception('商品不可用或购物车异常');
+            }
+            // 判断商品是否可以购买
+            $commodity = Commodity::query()->sharedLock()->find($cart->commodity_id);
+            if (!$commodity) {
+                // 购物车转为不可用
+                \DB::rollBack();
+                $cart->state = '0';
+                $cart->save();
+                throw new Exception('商品 ' . $cart->title . ' 不存在');
+            }
+            if ($commodity->count_stack < $good['count']) {
+                throw new Exception('商品 ' . $cart->title . ' 库存不足');
+            }
+            $orderGood = $this->createOrderGood($commodity, $order->id, $good['count']);
+            $totalPrice += $orderGood->pay * $orderGood->count;
+            // TODO: 订单商品奖励计算，每个商品的reward，根据用户评级能获得部分，满级用户能获得全部……
+
+            if ($cart->image) {
+                $cart->image->delete();
+            }
+            $cart->delete();
+        }
+        $order->price = $totalPrice;
+        $order->save();
+        // TODO: 订单统计所有的优惠金额
+        \DB::commit();
+        return $order;
+    }
+
+    /**
+     * 创建订单商品
+     *
+     * @param Commodity $commodity 商品
+     * @param integer   $order_id  订单ID
+     * @param integer   $count     数量
+     *
+     * @return OrderGood 创建后的订单商品
+     */
+    private function createOrderGood($commodity, $order_id, $count)
+    {
+        $orderGood = $this->orderGoodRepository->create([
+            'commodity_id' => $commodity->id,
+            'pay'          => $commodity->price,
+            'order_id'     => $order_id,
+            'count'        => $count,
+            'title'        => $commodity->title,
+            'reward'       => 0,
+        ]);
+        $commodity->count_stack -= $orderGood->count;
+        $commodity->save();
+        $this->imageRepository->firstOrCreate([
+            'image_type' => 'orderGood',
+            'image_id'   => $orderGood->id,
+            'url'        => $commodity->bannerImages[0]->url
+        ]);
+        return $orderGood;
+    }
+
 }

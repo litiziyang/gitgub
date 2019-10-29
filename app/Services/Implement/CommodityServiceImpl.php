@@ -29,7 +29,7 @@ class CommodityServiceImpl implements CommodityService
      * @return array 商品列表
      * @throws Exception
      */
-    public function list(array $carts)
+    public function listByCart(array $carts)
     {
         $carts = $this->cartRepository
             ->with('commodity')
@@ -56,6 +56,21 @@ class CommodityServiceImpl implements CommodityService
     }
 
     /**
+     * 获取商品列表
+     *
+     * @param integer $commodity_id 商品ID
+     *
+     * @return array 商品列表
+     */
+    public function list($commodity_id)
+    {
+        $commodities = $this->commodityRepository
+            ->where('id', $commodity_id)
+            ->get();
+        return $commodities;
+    }
+
+    /**
      * 获取商品和封面图
      *
      * @param integer $id 商品ID
@@ -68,4 +83,6 @@ class CommodityServiceImpl implements CommodityService
             ->with('bannerImages')
             ->findOrFail($id);
     }
+
+
 }

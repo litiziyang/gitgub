@@ -84,7 +84,11 @@ class OrderController extends Controller
             return $this->validate();
         }
         $address = $this->addressService->find($data['address_id']);
-        $order = $this->orderService->create($data['commodities'], $request->user_id, $address, $data['remarks']);
+        if (sizeof($data['commodities']) > 1) {
+            $order = $this->orderService->createByCart($data['commodities'], $request->user_id, $address, $data['remarks']);
+        } else {
+            $order = $this->orderService->createOne($data['commodities'][0], $request->user_id, $address, $data['remarks']);
+        }
         return $this->success([
             'price'  => $order->price,
             'number' => $order->number,

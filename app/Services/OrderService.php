@@ -8,7 +8,7 @@ use App\Order;
 interface OrderService
 {
     /**
-     * 创建订单
+     * 购物车创建多商品订单
      *
      * @param array   $commodities 商品数组
      * @param integer $user_id     用户ID
@@ -18,7 +18,19 @@ interface OrderService
      * @return Order 创建后的订单
      * @todo 还未计算优惠返现这些
      */
-    public function create(array $commodities, $user_id, $address, $remarks): Order;
+    public function createByCart(array $commodities, $user_id, $address, $remarks): Order;
+
+    /**
+     * 立即购买创建订单
+     *
+     * @param mixed   $good    商品数组
+     * @param integer $user_id 用户ID
+     * @param Address $address 地址
+     * @param string  $remarks 备注
+     *
+     * @return Order 创建后的订单
+     */
+    public function createOne($good, $user_id, $address, $remarks): Order;
 
     /**
      * 获取全部订单
