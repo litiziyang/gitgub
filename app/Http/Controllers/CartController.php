@@ -64,8 +64,11 @@ class CartController extends Controller
         if ($validator->fails()) {
             return $this->validate();
         }
+
         $id = $data['id'];
         $commodity = Commodity::with('bannerImages')->findOrFail($id);
+
+
         $cart = Cart::firstOrNew([
             'commodity_id' => $commodity->id,
             'user_id'      => $request->user_id,
@@ -158,7 +161,8 @@ class CartController extends Controller
 
     public function destroyAll(Request $request)
     {
-        $carts = Cart::where('user_id', $request->user_id)
+        $carts = Cart::query()
+            ->where('user_id', $request->user_id)
             ->get();
         foreach ($carts as $cart) {
             $image = $cart->image;

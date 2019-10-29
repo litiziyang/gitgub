@@ -231,6 +231,10 @@ return [
     'jwt' => [
         'secret' => env('JWTKEY', 'f12hfJPhEy^CAO23eMlh1ATl&vcFd*AW'),
         'time'   => env('JWT_TIME', 3600),
+        'pay'    => [
+            'time'   => env('JWT_PAY_TIME', 300),
+            'secret' => env('JWT_PAY_KEY', 'f12hfJPhEy^CAO23eMlh1ATl&vcFd*AW'),
+        ]
     ],
 
 

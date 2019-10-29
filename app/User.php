@@ -3,6 +3,7 @@
 namespace App;
 
 use EasyWeChat\Factory;
+use EasyWeChat\MiniProgram\Application;
 use Eloquent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -157,6 +158,10 @@ class User extends Authenticatable
         return (string)$token;
     }
 
+    /**
+     * 获取微信App
+     * @return Application App
+     */
     public static function getWechatApp()
     {
         $config = [

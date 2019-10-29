@@ -86,8 +86,9 @@ class OrderController extends Controller
         $address = $this->addressService->find($data['address_id']);
         $order = $this->orderService->create($data['commodities'], $request->user_id, $address, $data['remarks']);
         return $this->success([
-            'price' => $order->price,
-            'id'    => $order->id,
+            'price'  => $order->price,
+            'number' => $order->number,
+            'token'  => $order->getToken()
         ]);
     }
 

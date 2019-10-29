@@ -6,12 +6,15 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key;
 
 /**
  * App\Order
  *
  * @property int                         $id
- * @property int                         $number         订单编号编号
+ * @property string                      $number         订单标号
  * @property int|null                    $transaction_id 交易编号
  * @property int                         $user_id        用户ID
  * @property string                      $state          订单状态
@@ -55,7 +58,7 @@ class Order extends Model
         'description',
         'remarks',
         'longitude',
-        'latitude'
+        'latitude',
     ];
 
     public function user()
@@ -76,5 +79,38 @@ class Order extends Model
     public function orderGood()
     {
         return $this->hasMany(OrderGood::class, 'order_id', 'id');
+    }
+
+    /**
+     * @return string 生成订单号
+     */
+    public static function createOrderNo()
+    {
+        $order_id_main = date('YmdHis') . rand(10000000, 99999999);
+        $order_id_len = strlen($order_id_main);
+        $order_id_sum = 0;
+        for ($i = 0; $i < $order_id_len; $i++) {
+            $order_id_sum += (int)(substr($order_id_main, $i, 1));
+        }
+        $osn = $order_id_main . str_pad((100 - $order_id_sum % 100) % 100, 2, '0', STR_PAD_LEFT);
+        return $osn;
+    }
+
+    /**
+     * 获取Token
+     * @return string Token
+     */
+    public function getToken(): string
+    {
+        $token = (new Builder())
+            ->issuedBy('https://www.leisite.com')
+            ->permittedFor('https://www.leisite.com')
+            ->IssuedAt(time())
+            ->expiresAt(time() + config('app.jwt.pay.time'))
+            ->withClaim('id', $this->id)
+            ->withClaim('number', $this->number)
+            ->withClaim('price', $this->price)
+            ->getToken(new Sha256(), new Key(config('app.jwt.pay.secret')));
+        return (string)$token;
     }
 }

@@ -41,7 +41,7 @@ class OrderServiceImpl implements OrderService
     {
         \DB::beginTransaction();
         $order = $this->orderRepository->create([
-            'number'      => count($commodities),
+            'number'      => Order::createOrderNo(),
             'user_id'     => $user_id,
             'price'       => 0,
             'name'        => $address->name,

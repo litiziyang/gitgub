@@ -39,6 +39,7 @@ class OrderGood extends Model
         'order_id',
         'count',
         'reward',
+        'title',
     ];
 
     public function commodity()
