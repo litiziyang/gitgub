@@ -15,4 +15,12 @@ interface CommodityService
      */
     public function list(array $carts);
 
+    /**
+     * 获取商品和封面图
+     *
+     * @param integer $id 商品ID
+     *
+     * @return mixed
+     */
+    public function getWithImage($id);
 }

@@ -54,4 +54,18 @@ class CommodityServiceImpl implements CommodityService
             ->get();
         return $commodities;
     }
+
+    /**
+     * 获取商品和封面图
+     *
+     * @param integer $id 商品ID
+     *
+     * @return mixed
+     */
+    public function getWithImage($id)
+    {
+        return $this->commodityRepository
+            ->with('bannerImages')
+            ->findOrFail($id);
+    }
 }
