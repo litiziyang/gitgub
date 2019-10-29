@@ -10,8 +10,10 @@ use App\Comment;
 use App\Commodity;
 use App\OrderGood;
 use App\Services\AddressService;
+use App\Services\CartService;
 use App\Services\CommodityService;
 use App\Services\Implement\AddressServiceImpl;
+use App\Services\Implement\CartServiceImpl;
 use App\Services\Implement\CommodityServiceImpl;
 use App\Services\Implement\OrderServiceImpl;
 use App\Services\Implement\UserServiceImpl;
@@ -34,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserService::class, UserServiceImpl::class);
         $this->app->bind(OrderService::class, OrderServiceImpl::class);
         $this->app->bind(CommodityService::class, CommodityServiceImpl::class);
+        $this->app->bind(CartService::class, CartServiceImpl::class);
     }
 
     /**

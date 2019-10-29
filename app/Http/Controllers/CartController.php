@@ -7,6 +7,8 @@ use App\Commodity;
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\CartResource;
 use App\Image;
+use App\Services\CartService;
+use App\Services\CommodityService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,9 +18,14 @@ use Validator;
 class CartController extends Controller
 {
 
-    public function __construct()
+    protected $commodityService;
+    protected $cartService;
+
+    public function __construct(CommodityService $commodityService, CartService $cartService)
     {
         $this->middleware('jwt', ['except' => []]);
+        $this->commodityService = $commodityService;
+        $this->cartService = $cartService;
     }
 
     /**
@@ -66,25 +73,8 @@ class CartController extends Controller
         }
 
         $id = $data['id'];
-        $commodity = Commodity::with('bannerImages')->findOrFail($id);
-
-
-        $cart = Cart::firstOrNew([
-            'commodity_id' => $commodity->id,
-            'user_id'      => $request->user_id,
-        ]);
-        // 冗余商品信息,用于商品数据不存在时显示
-        $cart->title = $commodity->title;
-        $cart->price = $commodity->price;
-
-        $cart->count = $cart->count + 1;
-        $cart->save();
-
-        Image::create([
-            'image_type' => 'cart',
-            'image_id'   => $cart->id,
-            'url'        => $commodity->bannerImages[0]->url,
-        ]);
+        $commodity = $this->commodityService->getWithImage($id);
+        $this->cartService->create($commodity, $request->user_id);
 
         return $this->success();
     }
