@@ -57,5 +57,6 @@ class AppServiceProvider extends ServiceProvider
             'cart'      => Cart::class,
             'orderGood' => OrderGood::class,
         ]);
+        \Schema::defaultStringLength(191);
     }
 }

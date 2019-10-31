@@ -19,9 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedInteger('integral')->default(0)->comment('积分');
-            $table->float('balance', 8, 2)->default(0)->comment('余额');
-            $table->enum('member_type', [0, 1])->default(0)->comment('会员类型 0 非会员 1 会员');
 
             $table->string('nick_name')->nullable()->comment('真实姓名');
 
