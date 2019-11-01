@@ -30,7 +30,6 @@ class OrderController extends Controller
      * @param Request $request
      *
      * @return BaseResource
-     * @throws ValidationException
      */
     public function index(Request $request)
     {
@@ -99,7 +98,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Order $order
+     * @param Order $order
      *
      * @return Response
      */
@@ -111,8 +110,8 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request    $request
-     * @param \App\Order $order
+     * @param Request $request
+     * @param Order   $order
      *
      * @return Response
      */
@@ -124,12 +123,32 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Order $order
+     * @param Order $order
      *
      * @return Response
      */
     public function destroy(Order $order)
     {
         //
+    }
+
+    /**
+     * 返回订单数据
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
+    public function pay(Request $request)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'id' => 'required|integer',
+        ]);
+        if ($validator->failed()) {
+            return $this->validate();
+        }
+        $order = $this->orderService->find($data['id']);
+        return $this->success();
     }
 }

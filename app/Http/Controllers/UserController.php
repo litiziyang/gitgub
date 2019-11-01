@@ -68,6 +68,13 @@ class UserController extends Controller
         return new BaseResource(0, '更新成功');
     }
 
+    /**
+     * 登录信息提交，返回验证码
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
     public function commit(Request $request)
     {
         $data = $request->all();
@@ -87,6 +94,13 @@ class UserController extends Controller
         return new BaseResource(0, Cache::get($data['phone']));
     }
 
+    /**
+     * 验证登录
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
     public function verify(Request $request)
     {
         $data = $request->all();
@@ -160,6 +174,10 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 获取cos临时密钥
+     * @return BaseResource
+     */
     public function secret()
     {
         $disk = Storage::disk('cosv5');

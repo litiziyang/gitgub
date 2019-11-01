@@ -76,6 +76,8 @@ class ImageController extends Controller
     }
 
     /**
+     * 设置头像
+     *
      * @param Request $request
      *
      * @return BaseResource

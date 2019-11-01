@@ -45,7 +45,6 @@ class AddressController extends Controller
      * @param Request $request
      *
      * @return BaseResource
-     * @throws ValidationException
      * @throws Exception
      */
     public function store(Request $request)
@@ -95,7 +94,6 @@ class AddressController extends Controller
      * @param Address $address
      *
      * @return BaseResource
-     * @throws ValidationException
      */
     public function update(Request $request, Address $address)
     {

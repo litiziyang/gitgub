@@ -59,7 +59,6 @@ class CartController extends Controller
      * @param Request $request
      *
      * @return BaseResource
-     * @throws ValidationException
      */
     public function store(Request $request)
     {
@@ -110,7 +109,6 @@ class CartController extends Controller
      * @param Cart    $cart
      *
      * @return BaseResource
-     * @throws ValidationException
      */
     public function update(Request $request, Cart $cart)
     {

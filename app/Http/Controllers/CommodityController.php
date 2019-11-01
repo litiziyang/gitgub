@@ -78,7 +78,6 @@ class CommodityController extends Controller
      * @param Request $request
      *
      * @return BaseResource
-     * @throws ValidationException
      */
     public function commodities(Request $request)
     {

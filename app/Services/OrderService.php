@@ -17,6 +17,7 @@ interface OrderService
      *
      * @return Order 创建后的订单
      * @todo 还未计算优惠返现这些
+     * @todo 不符合单一职责原则
      */
     public function createByCart(array $commodities, $user_id, $address, $remarks): Order;
 
@@ -76,4 +77,13 @@ interface OrderService
      * @return mixed 待评价订单
      */
     public function evaluate($page);
+
+    /**
+     * 获取订单
+     *
+     * @param integer $id 订单ID
+     *
+     * @return Order 订单
+     */
+    public function find($id): Order;
 }
