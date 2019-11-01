@@ -2,15 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BaseResource;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Validator;
 
 class TransactionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('jwt', ['except' => []]);
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -18,31 +27,32 @@ class TransactionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return BaseResource
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'token'  => 'required|string',
+            'number' => 'required|integer',
+            'price'  => 'required'
+        ]);
+        if ($validator->failed()) {
+            return $this->validate();
+        }
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param \App\Transaction $transaction
+     *
+     * @return Response
      */
     public function show(Transaction $transaction)
     {
@@ -50,22 +60,12 @@ class TransactionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Transaction $transaction)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param Request          $request
+     * @param \App\Transaction $transaction
+     *
+     * @return Response
      */
     public function update(Request $request, Transaction $transaction)
     {
@@ -75,8 +75,9 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param \App\Transaction $transaction
+     *
+     * @return Response
      */
     public function destroy(Transaction $transaction)
     {

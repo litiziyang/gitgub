@@ -149,6 +149,10 @@ class OrderController extends Controller
             return $this->validate();
         }
         $order = $this->orderService->find($data['id']);
-        return $this->success();
+        return $this->success([
+            'price'  => $order->price,
+            'number' => $order->number,
+            'token'  => $order->getToken()
+        ]);
     }
 }
