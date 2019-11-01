@@ -6,27 +6,29 @@ use App\Banner;
 use App\Http\Resources\BannerResource;
 use App\Http\Resources\BaseResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BannerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return BaseResource
      */
     public function index()
     {
         $banners = Banner::with('image')
             ->orderBy('level', 'desc')
             ->get();
-        return new BaseResource(0, '', BannerResource::collection($banners));
+        return $this->success(BannerResource::collection($banners));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -36,8 +38,9 @@ class BannerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Banner  $banner
-     * @return \Illuminate\Http\Response
+     * @param Banner $banner
+     *
+     * @return Response
      */
     public function edit(Banner $banner)
     {
@@ -47,9 +50,10 @@ class BannerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Banner  $banner
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Banner  $banner
+     *
+     * @return Response
      */
     public function update(Request $request, Banner $banner)
     {
@@ -59,8 +63,9 @@ class BannerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Banner  $banner
-     * @return \Illuminate\Http\Response
+     * @param Banner $banner
+     *
+     * @return Response
      */
     public function destroy(Banner $banner)
     {

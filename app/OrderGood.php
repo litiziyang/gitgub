@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
  * @property float          $pay          当时价格
  * @property int            $order_id     订单ID
  * @property int            $count        数量
+ * @property string         $title        标题
  * @property Carbon|null    $created_at
  * @property Carbon|null    $updated_at
  * @property-read Commodity $commodity

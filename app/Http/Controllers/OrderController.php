@@ -30,7 +30,6 @@ class OrderController extends Controller
      * @param Request $request
      *
      * @return BaseResource
-     * @throws ValidationException
      */
     public function index(Request $request)
     {
@@ -44,7 +43,6 @@ class OrderController extends Controller
         }
         $state = $data['state'] ?? 10;
         $page = $data['page'] ?? 1;
-        $orders = [];
         switch ($state) {
             case 10 :
                 $orders = $this->orderService->list($page);
@@ -53,12 +51,16 @@ class OrderController extends Controller
                 $orders = $this->orderService->pendingPayment($page);
                 break;
             case 1:
-                $orders = $this->orderService->shipped($page);
+                $orders = $this->orderService->beingProcessed($page);
                 break;
             case 2:
+                $orders = $this->orderService->shipped($page);
+                break;
+            case 3:
                 $orders = $this->orderService->evaluate($page);
                 break;
             default:
+                return $this->validate();
                 break;
         }
         return $this->success(OrderResource::collection($orders));
@@ -99,7 +101,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Order $order
+     * @param Order $order
      *
      * @return Response
      */
@@ -111,8 +113,8 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request    $request
-     * @param \App\Order $order
+     * @param Request $request
+     * @param Order   $order
      *
      * @return Response
      */
@@ -124,12 +126,36 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Order $order
+     * @param Order $order
      *
      * @return Response
      */
     public function destroy(Order $order)
     {
         //
+    }
+
+    /**
+     * 返回订单数据
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
+    public function pay(Request $request)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'id' => 'required|integer',
+        ]);
+        if ($validator->failed()) {
+            return $this->validate();
+        }
+        $order = $this->orderService->find($data['id']);
+        return $this->success([
+            'price'  => $order->price,
+            'number' => $order->number,
+            'token'  => $order->getToken()
+        ]);
     }
 }

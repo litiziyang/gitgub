@@ -44,4 +44,9 @@ Route::get('/address/default', 'AddressController@default');
 Route::apiResource('/address', 'AddressController');
 
 #Order
+Route::post('/order/pay', 'OrderController@pay');
 Route::apiResource('/order', 'OrderController');
+
+#Transaction
+Route::apiResource('/transaction', 'TransactionController');
+

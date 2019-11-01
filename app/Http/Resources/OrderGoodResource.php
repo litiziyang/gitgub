@@ -24,7 +24,8 @@ class OrderGoodResource extends JsonResource
     {
         return [
             'id'     => $this->id,
-            'title' => $this->title,
+            'title'  => $this->title,
+            'price'  => $this->pay,
             'image'  => config('app.cos.cdn') . $this->image->url,
             'number' => $this->count
         ];

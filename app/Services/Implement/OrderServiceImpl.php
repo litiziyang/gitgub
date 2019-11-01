@@ -248,4 +248,17 @@ class OrderServiceImpl implements OrderService
         return $orderGood;
     }
 
+    /**
+     * 获取订单
+     *
+     * @param integer $id 订单ID
+     *
+     * @return Order 订单
+     */
+    public function find($id): Order
+    {
+        $order = $this->orderRepository
+            ->findOrFail($id);
+        return $order;
+    }
 }
