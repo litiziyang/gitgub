@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BaseResource;
+use App\Services\TransactionService;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -10,10 +11,12 @@ use Validator;
 
 class TransactionController extends Controller
 {
+    protected $transactionService;
 
-    public function __construct()
+    public function __construct(TransactionService $transactionService)
     {
         $this->middleware('jwt', ['except' => []]);
+        $this->transactionService = $transactionService;
     }
 
     /**
@@ -42,9 +45,10 @@ class TransactionController extends Controller
             'price'  => 'required'
         ]);
         if ($validator->failed()) {
-            return $this->validate();
+            return $this->validate('');
         }
-
+        $this->transactionService->create($data['token'], $data['number'], $data['price'], $request->user_id);
+        return $this->success();
     }
 
     /**

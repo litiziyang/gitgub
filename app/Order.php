@@ -17,7 +17,7 @@ use Lcobucci\JWT\Signer\Key;
  * @property string                      $number         订单标号
  * @property int|null                    $transaction_id 交易编号
  * @property int                         $user_id        用户ID
- * @property string                      $state          订单状态
+ * @property string                      $state          订单状态 0 待付款 1 待发货 2 待收货 3 待评价 4 已失败 5 已完成
  * @property float                       $reward         奖励金额
  * @property float                       $price          价格
  * @property string                      $address        地址
@@ -61,6 +61,32 @@ class Order extends Model
         'latitude',
     ];
 
+    /**
+     * 待付款
+     */
+    const PENDING_PAYMENT = '0';
+    /**
+     * 待发货
+     */
+    const BEING_PROCESSED = '1';
+    /**
+     * 待收货
+     */
+    const SHIPPED = '2';
+    /**
+     * 待评价
+     */
+    const EVALUATE = '3';
+    /**
+     * 已失效
+     */
+    const INVALID = '4';
+    /**
+     * 已完成
+     */
+    const COMPLETED = '5';
+
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
@@ -84,7 +110,7 @@ class Order extends Model
     /**
      * @return string 生成订单号
      */
-    public static function createOrderNo()
+    public static function createOrderNo(): string
     {
         $order_id_main = date('YmdHis') . rand(10000000, 99999999);
         $order_id_len = strlen($order_id_main);

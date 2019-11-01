@@ -4,7 +4,6 @@
 namespace App\Services\Implement;
 
 
-use App\Http\Resources\BaseResource;
 use App\Order;
 use App\Services\TransactionService;
 use App\Transaction;
@@ -28,13 +27,14 @@ class TransactionServiceImpl implements TransactionService
      * 支付成功生成交易
      *
      * @param string  $token
-     * @param integer $number 订单号
-     * @param float   $price  付的价格
+     * @param integer $number  订单号
+     * @param float   $price   付的价格
+     * @param integer $user_id 用户ID
      *
      * @return Transaction 交易内容
      * @throws Exception
      */
-    public function create(string $token, $number, $price): Transaction
+    public function create(string $token, $number, $price, $user_id): Transaction
     {
         $parser = (new Parser())->parse($token);
         if (!$parser->verify(new Sha256(), config('app.jwt.pay.secret'))) {
@@ -46,14 +46,25 @@ class TransactionServiceImpl implements TransactionService
         $token_id = $parser->getClaim('id');
         $token_number = $parser->getClaim('number');
         $token_price = $parser->getClaim('price');
-        $order = $this->orderRepository->findOrFail([
-            'id'     => $token_id,
-            'number' => $token_number,
-            'price'  => $token_price
-        ]);
+        $order = $this->orderRepository
+            ->where('id', $token_id)
+            ->where('price', $token_price)
+            ->where('number', $token_number)
+            ->first();
         if ($order->price != $price || $order->number != $number) {
             throw new Exception('交易异常');
         }
-        
+        \DB::beginTransaction();
+        $transaction = $this->transactionRepository->create([
+            'user_id'  => $user_id,
+            'price'    => $price,
+            'number'   => Transaction::createTransactionNo(),
+            'order_id' => $order->id
+        ]);
+        $order->state = Order::BEING_PROCESSED;
+        $order->transaction_id = $transaction->id;
+        $order->save();
+        \DB::commit();
+        return $transaction;
     }
 }

@@ -43,7 +43,6 @@ class OrderController extends Controller
         }
         $state = $data['state'] ?? 10;
         $page = $data['page'] ?? 1;
-        $orders = [];
         switch ($state) {
             case 10 :
                 $orders = $this->orderService->list($page);
@@ -52,12 +51,16 @@ class OrderController extends Controller
                 $orders = $this->orderService->pendingPayment($page);
                 break;
             case 1:
-                $orders = $this->orderService->shipped($page);
+                $orders = $this->orderService->beingProcessed($page);
                 break;
             case 2:
+                $orders = $this->orderService->shipped($page);
+                break;
+            case 3:
                 $orders = $this->orderService->evaluate($page);
                 break;
             default:
+                return $this->validate();
                 break;
         }
         return $this->success(OrderResource::collection($orders));
