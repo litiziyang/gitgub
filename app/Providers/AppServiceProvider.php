@@ -16,9 +16,11 @@ use App\Services\Implement\AddressServiceImpl;
 use App\Services\Implement\CartServiceImpl;
 use App\Services\Implement\CommodityServiceImpl;
 use App\Services\Implement\OrderServiceImpl;
+use App\Services\Implement\RecordServiceImpl;
 use App\Services\Implement\TransactionServiceImpl;
 use App\Services\Implement\UserServiceImpl;
 use App\Services\OrderService;
+use App\Services\RecordService;
 use App\Services\TransactionService;
 use App\Services\UserService;
 use App\User;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CommodityService::class, CommodityServiceImpl::class);
         $this->app->bind(CartService::class, CartServiceImpl::class);
         $this->app->bind(TransactionService::class, TransactionServiceImpl::class);
+        $this->app->bind(RecordService::class, RecordServiceImpl::class);
     }
 
     /**

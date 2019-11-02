@@ -261,4 +261,46 @@ class OrderServiceImpl implements OrderService
             ->findOrFail($id);
         return $order;
     }
+
+    /**
+     * 取消订单
+     *
+     * @param integer $id 订单ID
+     *
+     * @return Order 取消后的订单 为已失效订单
+     * @throws Exception
+     */
+    public function cancel($id): Order
+    {
+        $order = $this->orderRepository->with('orderGood.commodity')->findOrFail($id);
+        if (!in_array($order->state, [Order::PENDING_PAYMENT, Order::BEING_PROCESSED])) {
+            throw new Exception('订单无法取消');
+        }
+        \DB::beginTransaction();
+        switch ($order->state) {
+            case Order::PENDING_PAYMENT :
+                $order->state = Order::INVALID;
+                break;
+            case Order::BEING_PROCESSED:
+                // TODO 退款操作
+                $order->state = Order::INVALID;
+                break;
+        }
+        $order->save();
+
+        // 商品库存回滚
+        $orderGoods = $order->orderGood;
+        foreach ($orderGoods as $good) {
+            $commodity = $good->commodity;
+            if ($commodity) {
+                $commodity->count_stack += $good->count;
+                if ($order->state == Order::BEING_PROCESSED) {
+                    $commodity->count_sales -= $good->count;
+                }
+                $commodity->save();
+            }
+        }
+        \DB::commit();
+        return $order;
+    }
 }

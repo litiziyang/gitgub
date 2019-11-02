@@ -47,14 +47,14 @@ class TransactionController extends Controller
         if ($validator->failed()) {
             return $this->validate('');
         }
-        $this->transactionService->create($data['token'], $data['number'], $data['price'], $request->user_id);
-        return $this->success();
+        $transaction = $this->transactionService->create($data['token'], $data['number'], $data['price'], $request->user_id);
+        return $this->success($transaction);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Transaction $transaction
+     * @param Transaction $transaction
      *
      * @return Response
      */
@@ -66,8 +66,8 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request          $request
-     * @param \App\Transaction $transaction
+     * @param Request     $request
+     * @param Transaction $transaction
      *
      * @return Response
      */
@@ -79,7 +79,7 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Transaction $transaction
+     * @param Transaction $transaction
      *
      * @return Response
      */

@@ -72,7 +72,6 @@ class OrderController extends Controller
      * @param Request $request
      *
      * @return BaseResource
-     * @throws ValidationException
      */
     public function store(Request $request)
     {
@@ -157,5 +156,25 @@ class OrderController extends Controller
             'number' => $order->number,
             'token'  => $order->getToken()
         ]);
+    }
+
+    /**
+     * 取消订单
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
+    public function cancel(Request $request)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'id' => 'required|integer'
+        ]);
+        if ($validator->failed()) {
+            return $this->validate();
+        }
+        $order = $this->orderService->cancel($data['id']);
+        return $this->success($order);
     }
 }

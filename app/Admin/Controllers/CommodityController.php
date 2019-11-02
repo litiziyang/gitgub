@@ -48,7 +48,7 @@ class CommodityController extends AdminController
         $grid->column('created_at', __('Created at'))->hide();
         $grid->column('updated_at', __('Updated at'))->hide();
 
-        $grid->actions(function ($actions) {
+        $grid->actions(function (Grid\Displayers\Actions $actions) {
             $actions->add(new Banner);
             $actions->add(new BannerShow);
             $actions->add(new Details);

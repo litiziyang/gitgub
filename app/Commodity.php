@@ -28,8 +28,8 @@ use Illuminate\Support\Carbon;
  * @property-read Category                   $category
  * @property-read Collection|Image[]         $detailImages
  * @property-read int|null                   $detail_images_count
- * @property-write mixed                     $banners
- * @property-write mixed                     $details
+ * @property mixed                     $banners
+ * @property mixed                     $details
  * @property-read Collection|Specification[] $specifications
  * @property-read int|null                   $specifications_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Commodity newModelQuery()
