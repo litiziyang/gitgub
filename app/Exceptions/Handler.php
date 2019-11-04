@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -55,6 +56,9 @@ class Handler extends ExceptionHandler
     {
 //         return parent::render($request, $exception);
         // DB::rollBack();
+        if ($exception instanceof ModelNotFoundException) {
+            $exception = new Exception('未知错误');
+        }
         $exceptionMessage = $exception->getMessage();
         switch ($exceptionMessage) {
             case 'This action is unauthorized.':

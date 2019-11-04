@@ -84,5 +84,16 @@ class CommodityServiceImpl implements CommodityService
             ->findOrFail($id);
     }
 
-
+    /**
+     * 增加浏览次数
+     *
+     * @param Commodity $commodity 商品
+     *
+     * @return mixed
+     */
+    public function addView($commodity)
+    {
+        $commodity->count_view++;
+        $commodity->save();
+    }
 }

@@ -7,6 +7,7 @@ use App\Http\Resources\BaseResource;
 use App\Http\Resources\CommodityDetailResource;
 use App\Http\Resources\CommodityResource;
 use App\Services\CommodityService;
+use App\Services\RecordService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Validator;
@@ -15,11 +16,13 @@ class CommodityController extends Controller
 {
 
     protected $commodityService;
+    protected $recordService;
 
-    public function __construct(CommodityService $commodityService)
+    public function __construct(CommodityService $commodityService, RecordService $recordService)
     {
         $this->middleware('jwt', ['except' => ['index', 'home', 'show']]);
         $this->commodityService = $commodityService;
+        $this->recordService = $recordService;
     }
 
     /**
@@ -65,12 +68,16 @@ class CommodityController extends Controller
     /**
      * 获取单个商品.
      *
+     * @param Request   $request
      * @param Commodity $commodity
      *
      * @return BaseResource
      */
-    public function show(Commodity $commodity)
+    public function show(Request $request, Commodity $commodity)
     {
+        if ($this->recordService->view($request->user_id, $commodity->id)) {
+            $this->commodityService->addView($commodity);
+        }
         return $this->success(new CommodityDetailResource($commodity));
     }
 

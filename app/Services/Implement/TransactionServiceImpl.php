@@ -61,9 +61,19 @@ class TransactionServiceImpl implements TransactionService
             'number'   => Transaction::createTransactionNo(),
             'order_id' => $order->id
         ]);
+        // 订单状态改为待发货
         $order->state = Order::BEING_PROCESSED;
         $order->transaction_id = $transaction->id;
         $order->save();
+        // 商品销量增加
+        $orderGoods = $order->orderGood;
+        foreach ($orderGoods as $good) {
+            $commodity = $good->commodity;
+            if ($commodity) {
+                $commodity->count_sales += $good->count;
+                $commodity->save();
+            }
+        }
         \DB::commit();
         return $transaction;
     }

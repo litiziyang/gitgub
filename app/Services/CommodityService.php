@@ -4,6 +4,8 @@
 namespace App\Services;
 
 
+use App\Commodity;
+
 interface CommodityService
 {
     /**
@@ -33,4 +35,13 @@ interface CommodityService
      * @return mixed
      */
     public function getWithImage($id);
+
+    /**
+     * 增加浏览次数
+     *
+     * @param Commodity $commodity 商品
+     *
+     * @return mixed
+     */
+    public function addView($commodity);
 }

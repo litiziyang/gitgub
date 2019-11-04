@@ -86,4 +86,13 @@ interface OrderService
      * @return Order 订单
      */
     public function find($id): Order;
+
+    /**
+     * 取消订单
+     *
+     * @param integer $id 订单ID
+     *
+     * @return Order 取消后的订单 为已失效订单
+     */
+    public function cancel($id): Order;
 }
