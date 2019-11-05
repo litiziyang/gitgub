@@ -30,7 +30,9 @@ class OrderController extends AdminController
         $grid->column('number', __('Number'));
         $grid->column('transaction_id', __('Transaction id'));
         $grid->column('user_id', __('User id'));
-        $grid->column('state', __('State'));
+        $grid->column('state', __('State'))->display(function ($state) {
+            return Order::getStateName($state);
+        });
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
@@ -41,6 +43,7 @@ class OrderController extends AdminController
      * Make a show builder.
      *
      * @param mixed $id
+     *
      * @return Show
      */
     protected function detail($id)

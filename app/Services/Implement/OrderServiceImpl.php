@@ -54,7 +54,7 @@ class OrderServiceImpl implements OrderService
      */
     public function pendingPayment($page, $user_id)
     {
-        return $this->getList($page, '0', $user_id);
+        return $this->getList($page, Order::PENDING_PAYMENT, $user_id);
     }
 
     /**
@@ -68,7 +68,7 @@ class OrderServiceImpl implements OrderService
      */
     public function beingProcessed($page, $user_id)
     {
-        return $this->getList($page, '1', $user_id);
+        return $this->getList($page, Order::BEING_PROCESSED, $user_id);
     }
 
     /**
@@ -82,7 +82,7 @@ class OrderServiceImpl implements OrderService
      */
     public function shipped($page, $user_id)
     {
-        return $this->getList($page, '2', $user_id);
+        return $this->getList($page, Order::SHIPPED, $user_id);
     }
 
     /**
@@ -95,7 +95,7 @@ class OrderServiceImpl implements OrderService
      */
     public function evaluate($page, $user_id)
     {
-        return $this->getList($page, '3', $user_id);
+        return $this->getList($page, Order::EVALUATE, $user_id);
     }
 
     /**
@@ -106,7 +106,7 @@ class OrderServiceImpl implements OrderService
      */
     public function afterSales($page, $user_id)
     {
-        return $this->getList($page, '6', $user_id);
+        return $this->getList($page, Order::AFTER_SALE, $user_id);
     }
 
     /**
