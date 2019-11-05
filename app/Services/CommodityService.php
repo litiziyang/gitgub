@@ -45,3 +45,4 @@ interface CommodityService
      */
     public function addView($commodity);
 }
+
