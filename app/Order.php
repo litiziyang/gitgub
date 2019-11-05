@@ -85,6 +85,46 @@ class Order extends Model
      * 已完成
      */
     const COMPLETED = '5';
+    /**
+     * 售后
+     */
+    const AFTER_SALE = '6';
+
+    /**
+     * 获取状态名称
+     *
+     * @param integer $state 状态码
+     *
+     * @return string 状态名称
+     */
+    public static function getStateName($state): string
+    {
+        $name = '';
+        switch ($state) {
+            case self::PENDING_PAYMENT :
+                $name = '待付款';
+                break;
+            case self::BEING_PROCESSED :
+                $name = '待发货';
+                break;
+            case self::SHIPPED :
+                $name = '待收货';
+                break;
+            case self::EVALUATE :
+                $name = '待评价';
+                break;
+            case self::INVALID :
+                $name = '已失效';
+                break;
+            case self::COMPLETED :
+                $name = '已完成';
+                break;
+            case self::AFTER_SALE:
+                $name = '售后';
+                break;
+        }
+        return $name;
+    }
 
 
     public function user()
