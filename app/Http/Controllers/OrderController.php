@@ -45,19 +45,19 @@ class OrderController extends Controller
         $page = $data['page'] ?? 1;
         switch ($state) {
             case 10 :
-                $orders = $this->orderService->list($page);
+                $orders = $this->orderService->list($page, $request->user_id);
                 break;
             case 0:
-                $orders = $this->orderService->pendingPayment($page);
+                $orders = $this->orderService->pendingPayment($page, $request->user_id);
                 break;
             case 1:
-                $orders = $this->orderService->beingProcessed($page);
+                $orders = $this->orderService->beingProcessed($page, $request->user_id);
                 break;
             case 2:
-                $orders = $this->orderService->shipped($page);
+                $orders = $this->orderService->shipped($page, $request->user_id);
                 break;
             case 3:
-                $orders = $this->orderService->evaluate($page);
+                $orders = $this->orderService->evaluate($page, $request->user_id);
                 break;
             default:
                 return $this->validate();
