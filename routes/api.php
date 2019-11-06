@@ -21,8 +21,10 @@ Route::post('/secret', 'UserController@secret');
 Route::post('/image/avatar', 'ImageController@avatar');
 
 # user
+Route::post('/user/makeVip','UserController@makeVip');
 Route::put('/user', 'UserController@update');
 Route::get('/user', 'UserController@index');
+
 
 #banner
 Route::get('/banner', 'BannerController@index');

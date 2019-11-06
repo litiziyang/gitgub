@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             'phone'    => $this->phone,
             'integral' => $this->integral,
             'balance'  => $this->balance,
+            'is_member' => $this->member_type
         ];
     }
 }

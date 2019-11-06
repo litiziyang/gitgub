@@ -77,6 +77,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'phone',
+        'member_type'
     ];
 
     /**
@@ -96,6 +97,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    const IS_MEMBER = '1';
+    const NO_MEMBER = '0';
 
     public function stars()
     {
