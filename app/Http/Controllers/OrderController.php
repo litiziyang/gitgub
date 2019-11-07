@@ -59,6 +59,9 @@ class OrderController extends Controller
             case 3:
                 $orders = $this->orderService->evaluate($page, $request->user_id);
                 break;
+            case 6:
+                $orders = $this->orderService->afterSales($page, $request->user_id);
+                break;
             default:
                 return $this->validate();
                 break;
