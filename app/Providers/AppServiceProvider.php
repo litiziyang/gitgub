@@ -12,9 +12,11 @@ use App\OrderGood;
 use App\Services\AddressService;
 use App\Services\CartService;
 use App\Services\CommodityService;
+use App\Services\CouponService;
 use App\Services\Implement\AddressServiceImpl;
 use App\Services\Implement\CartServiceImpl;
 use App\Services\Implement\CommodityServiceImpl;
+use App\Services\Implement\CouponServiceImp;
 use App\Services\Implement\OrderServiceImpl;
 use App\Services\Implement\RecordServiceImpl;
 use App\Services\Implement\TransactionServiceImpl;
@@ -43,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CartService::class, CartServiceImpl::class);
         $this->app->bind(TransactionService::class, TransactionServiceImpl::class);
         $this->app->bind(RecordService::class, RecordServiceImpl::class);
+        $this->app->bind(CouponService::class,CouponServiceImp::class);
     }
 
     /**

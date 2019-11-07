@@ -37,4 +37,6 @@ interface UserService
      */
     public function setVip($user_id, $user_status);
 
+
+
 }

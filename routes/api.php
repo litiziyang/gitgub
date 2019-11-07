@@ -54,6 +54,9 @@ Route::apiResource('/order', 'OrderController');
 #Transaction
 Route::apiResource('/transaction', 'TransactionController');
 
+#Coupon
+Route::apiResource('/coupon','CouponController');
+
 #Record
 Route::get('/record', 'RecordController@index');
 

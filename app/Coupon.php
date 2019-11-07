@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
  *
  * @property int         $id
  * @property string      $name      名称
- * @property string      $expire    到期时间
+ * @property Carbon|null $expire    到期时间
  * @property int         $user_id   所属用户
  * @property int         $offer     优惠
  * @property string|null $condition 条件
@@ -38,7 +38,7 @@ class Coupon extends Model
         'expire',
         'user_id',
         'offer',
-        'condition'
+        'condition',
     ];
 
     public function user()

@@ -100,8 +100,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    const IS_MEMBER = '1';
-    const NO_MEMBER = '0';
+    const IS_MEMBER = true;
+    const NO_MEMBER = false;
 
     public function stars()
     {
