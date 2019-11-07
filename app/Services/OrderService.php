@@ -110,5 +110,13 @@ interface OrderService
      */
     public function cancel($id): Order;
 
+    /**
+     * 确认收货
+     *
+     * @param integer $order_id 订单ID
+     *
+     * @return mixed
+     */
+    public function confirm($order_id);
 
 }

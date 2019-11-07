@@ -49,6 +49,7 @@ class OrderController extends AdminController
             return new \Encore\Admin\Widgets\Table(['ID', '标题', '价格', '数量'], $orderGoods->toArray());
         });
         $grid->column('price', '价格');
+        $grid->column('remarks', '备注');
         $grid->column('created_at', __('Created at'))->hide();
         $grid->column('updated_at', __('Updated at'))->hide();
 

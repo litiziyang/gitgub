@@ -327,4 +327,23 @@ class OrderServiceImpl implements OrderService
     }
 
 
+    /**
+     * 确认收货
+     *
+     * @param integer $order_id 订单ID
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    public function confirm($order_id)
+    {
+        $order = $this->orderRepository
+            ->findOrFail($order_id);
+        if ($order->state != Order::SHIPPED) {
+            throw new Exception('订单状态无法更改');
+        }
+        $order->state = Order::EVALUATE;
+        $order->save();
+        return $order;
+    }
 }

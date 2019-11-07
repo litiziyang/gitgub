@@ -180,4 +180,24 @@ class OrderController extends Controller
         $order = $this->orderService->cancel($data['id']);
         return $this->success($order);
     }
+
+    /**
+     * 确认收货
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
+    public function confirm(Request $request)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'id' => 'required|integer'
+        ]);
+        if ($validator->failed()) {
+            return $this->validate();
+        }
+        $this->orderService->confirm($data['id']);
+        return $this->success();
+    }
 }
