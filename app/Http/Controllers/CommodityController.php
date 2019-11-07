@@ -75,7 +75,7 @@ class CommodityController extends Controller
      */
     public function show(Request $request, Commodity $commodity)
     {
-        if ($this->recordService->view($request->user_id, $commodity->id)) {
+        if ($request->user_id && $this->recordService->view($request->user_id, $commodity->id)) {
             $this->commodityService->addView($commodity);
         }
         return $this->success(new CommodityDetailResource($commodity));
