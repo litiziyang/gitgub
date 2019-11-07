@@ -46,7 +46,8 @@ class UserServiceImpl implements UserService
     /**
      * 根据Id变成会员
      *
-     * @param int $user_id
+     * @param integer $user_id     用户ID
+     * @param integer $user_status 状态码
      *
      * @return boolean 是否成功
      */

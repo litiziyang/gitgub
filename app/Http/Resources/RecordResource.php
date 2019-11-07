@@ -24,7 +24,7 @@ class RecordResource extends JsonResource
     {
         return [
             'id'    => $this->commodity->id,
-            'image' => $this->commodity->bannerImages[0]->url
+            'image' => config('app.cos.cdn') . $this->commodity->bannerImages[0]->url
         ];
     }
 }

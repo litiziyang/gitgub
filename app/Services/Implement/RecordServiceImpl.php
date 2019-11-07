@@ -32,7 +32,7 @@ class RecordServiceImpl implements RecordService
         // 获取当前用户对当前商品的最后一次浏览记录
         if (!$record) {
             // 如果没有浏览记录，创建一个并返回true
-            $this->recordRepository->create([
+            $this->recordRepository->firstOrCreate([
                 'user_id'      => $user_id,
                 'commodity_id' => $commodity_id,
             ]);

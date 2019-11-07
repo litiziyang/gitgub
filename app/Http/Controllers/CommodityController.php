@@ -8,6 +8,7 @@ use App\Http\Resources\CommodityDetailResource;
 use App\Http\Resources\CommodityResource;
 use App\Services\CommodityService;
 use App\Services\RecordService;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Validator;
@@ -75,8 +76,12 @@ class CommodityController extends Controller
      */
     public function show(Request $request, Commodity $commodity)
     {
-        if ($request->user_id && $this->recordService->view($request->user_id, $commodity->id)) {
-            $this->commodityService->addView($commodity);
+        $token = $request->header('token');
+        if ($token) {
+            $user_id = User::tokenToUserID($token);
+            if ($this->recordService->view($user_id, $commodity->id)) {
+                $this->commodityService->addView($commodity);
+            }
         }
         return $this->success(new CommodityDetailResource($commodity));
     }
