@@ -3,6 +3,7 @@
 namespace App;
 
 use EasyWeChat\Factory;
+use Exception;
 use EasyWeChat\MiniProgram\Application;
 use Eloquent;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,6 +13,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key;
 
@@ -77,6 +79,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'phone',
+        'member_type'
     ];
 
     /**
@@ -96,6 +99,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    const IS_MEMBER = true;
+    const NO_MEMBER = false;
 
     public function stars()
     {
@@ -175,5 +181,24 @@ class User extends Authenticatable
         ];
         $app = Factory::miniProgram($config);
         return $app;
+    }
+
+    /**
+     * Token转UserID
+     *
+     * @param string $token 凭证
+     *
+     * @return int token
+     */
+    public static function tokenToUserID(string $token): int
+    {
+        $parser = (new Parser())->parse($token);
+        if (!$parser->verify(new Sha256(), config('app.jwt.secret'))) {
+            return -1;
+        }
+        if ($parser->isExpired()) {
+            return -1;
+        }
+        return $parser->getClaim('id');
     }
 }

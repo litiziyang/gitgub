@@ -36,47 +36,61 @@ interface OrderService
     /**
      * 获取全部订单
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     * @param integer $user_id 用户ID
      *
      * @return mixed 全部订单
      */
-    public function list($page);
+    public function list($page, $user_id);
 
     /**
      * 获取未付款订单列表
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     * @param integer $user_id 用户ID
      *
      * @return mixed 未付款订单列表
      */
-    public function pendingPayment($page);
+    public function pendingPayment($page, $user_id);
 
     /**
      * 获取待发货订单
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     * @param integer $user_id 用户ID
      *
      * @return mixed 待发货订单
      */
-    public function beingProcessed($page);
+    public function beingProcessed($page, $user_id);
 
     /**
      * 获取待收货订单
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     * @param integer $user_id 用户ID
      *
      * @return mixed 待收货订单
      */
-    public function shipped($page);
+    public function shipped($page, $user_id);
 
     /**
      * 获取待评价订单
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     * @param integer $user_id 用户ID
      *
      * @return mixed 待评价订单
      */
-    public function evaluate($page);
+    public function evaluate($page, $user_id);
+
+
+    /**
+     * @param integer $page    页码
+     * @param integer $user_id 用户ID
+     *
+     * @return mixed 售后订单
+     */
+    public function afterSales($page, $user_id);
 
     /**
      * 获取订单
@@ -95,4 +109,14 @@ interface OrderService
      * @return Order 取消后的订单 为已失效订单
      */
     public function cancel($id): Order;
+
+    /**
+     * 确认收货
+     *
+     * @param integer $order_id 订单ID
+     *
+     * @return mixed
+     */
+    public function confirm($order_id);
+
 }

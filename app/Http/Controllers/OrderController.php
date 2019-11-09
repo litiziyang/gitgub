@@ -45,19 +45,22 @@ class OrderController extends Controller
         $page = $data['page'] ?? 1;
         switch ($state) {
             case 10 :
-                $orders = $this->orderService->list($page);
+                $orders = $this->orderService->list($page, $request->user_id);
                 break;
             case 0:
-                $orders = $this->orderService->pendingPayment($page);
+                $orders = $this->orderService->pendingPayment($page, $request->user_id);
                 break;
             case 1:
-                $orders = $this->orderService->beingProcessed($page);
+                $orders = $this->orderService->beingProcessed($page, $request->user_id);
                 break;
             case 2:
-                $orders = $this->orderService->shipped($page);
+                $orders = $this->orderService->shipped($page, $request->user_id);
                 break;
             case 3:
-                $orders = $this->orderService->evaluate($page);
+                $orders = $this->orderService->evaluate($page, $request->user_id);
+                break;
+            case 6:
+                $orders = $this->orderService->afterSales($page, $request->user_id);
                 break;
             default:
                 return $this->validate();
@@ -176,5 +179,25 @@ class OrderController extends Controller
         }
         $order = $this->orderService->cancel($data['id']);
         return $this->success($order);
+    }
+
+    /**
+     * 确认收货
+     *
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
+    public function confirm(Request $request)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'id' => 'required|integer'
+        ]);
+        if ($validator->failed()) {
+            return $this->validate();
+        }
+        $this->orderService->confirm($data['id']);
+        return $this->success();
     }
 }

@@ -21,8 +21,10 @@ Route::post('/secret', 'UserController@secret');
 Route::post('/image/avatar', 'ImageController@avatar');
 
 # user
+Route::post('/user/makeVip', 'UserController@makeVip');
 Route::put('/user', 'UserController@update');
 Route::get('/user', 'UserController@index');
+
 
 #banner
 Route::get('/banner', 'BannerController@index');
@@ -46,8 +48,15 @@ Route::apiResource('/address', 'AddressController');
 #Order
 Route::post('/order/pay', 'OrderController@pay');
 Route::post('/order/cancel', 'OrderController@cancel');
+Route::post('/order/confirm', 'OrderController@confirm');
 Route::apiResource('/order', 'OrderController');
 
 #Transaction
 Route::apiResource('/transaction', 'TransactionController');
+
+#Coupon
+Route::apiResource('/coupon','CouponController');
+
+#Record
+Route::get('/record', 'RecordController@index');
 

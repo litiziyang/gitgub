@@ -42,4 +42,27 @@ class UserServiceImpl implements UserService
             'default_address_id' => $address_id
         ]);
     }
+
+    /**
+     * 根据Id变成会员
+     *
+     * @param integer $user_id     用户ID
+     * @param integer $user_status 状态码
+     *
+     * @return boolean 是否成功
+     */
+    public function setVip($user_id, $user_status)
+    {
+        if ($user_status != 1) {
+            return false;
+        } else {
+            $this->userRepository->where('id', $user_id)->update([
+                'member_type' => User::IS_MEMBER
+            ]);
+            return true;
+        }
+    }
+
+
+
 }

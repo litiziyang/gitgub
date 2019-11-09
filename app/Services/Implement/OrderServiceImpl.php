@@ -32,75 +32,97 @@ class OrderServiceImpl implements OrderService
     /**
      * 获取全部订单
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     *
+     * @param integer $user_id 用户ID
      *
      * @return mixed 全部订单
      */
-    public function list($page)
+    public function list($page, $user_id)
     {
-        return $this->getList($page);
+        return $this->getList($page, null, $user_id);
     }
 
     /**
      * 获取未付款订单列表
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     *
+     * @param integer $user_id 用户ID
      *
      * @return mixed 未付款订单列表
      */
-    public function pendingPayment($page)
+    public function pendingPayment($page, $user_id)
     {
-        return $this->getList($page, '0');
+        return $this->getList($page, Order::PENDING_PAYMENT, $user_id);
     }
 
     /**
      * 获取待发货订单
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     *
+     * @param integer $user_id 用户ID
      *
      * @return mixed 待发货订单
      */
-    public function beingProcessed($page)
+    public function beingProcessed($page, $user_id)
     {
-        return $this->getList($page, '1');
+        return $this->getList($page, Order::BEING_PROCESSED, $user_id);
     }
 
     /**
      * 获取待收货订单
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     *
+     * @param integer $user_id 用户ID
      *
      * @return mixed 待收货订单
      */
-    public function shipped($page)
+    public function shipped($page, $user_id)
     {
-        return $this->getList($page, '2');
+        return $this->getList($page, Order::SHIPPED, $user_id);
     }
 
     /**
      * 获取待评价订单
      *
-     * @param integer $page 页码
+     * @param integer $page    页码
+     * @param integer $user_id 用户ID
      *
      * @return mixed 待评价订单
      */
-    public function evaluate($page)
+    public function evaluate($page, $user_id)
     {
-        return $this->getList($page, '3');
+        return $this->getList($page, Order::EVALUATE, $user_id);
+    }
+
+    /**
+     * @param integer $page    页码
+     * @param integer $user_id 用户ID
+     *
+     * @return mixed 售后订单
+     */
+    public function afterSales($page, $user_id)
+    {
+        return $this->getList($page, Order::AFTER_SALE, $user_id);
     }
 
     /**
      * 获取订单列表
      *
-     * @param integer $page  页码
-     * @param string  $state 状态
+     * @param integer     $page    页码
+     * @param string|null $state   状态
+     * @param integer     $user_id 用户ID
      *
      * @return mixed 订单列表
      */
-    private function getList($page, $state = null)
+    private function getList($page, $state, $user_id)
     {
         $builder = $this->orderRepository
-            ->with('orderGood.image');
+            ->with('orderGood.image')
+            ->where('user_id', $user_id);
         if ($state != null) {
             $builder->where('state', $state);
         }
@@ -301,6 +323,27 @@ class OrderServiceImpl implements OrderService
             }
         }
         \DB::commit();
+        return $order;
+    }
+
+
+    /**
+     * 确认收货
+     *
+     * @param integer $order_id 订单ID
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    public function confirm($order_id)
+    {
+        $order = $this->orderRepository
+            ->findOrFail($order_id);
+        if ($order->state != Order::SHIPPED) {
+            throw new Exception('订单状态无法更改');
+        }
+        $order->state = Order::EVALUATE;
+        $order->save();
         return $order;
     }
 }

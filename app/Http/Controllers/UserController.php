@@ -36,6 +36,25 @@ class UserController extends Controller
     }
 
     /**
+     * 开通会员服务
+     * @param Request $request
+     *
+     * @return BaseResource
+     */
+    public function makeVip(Request $request)
+    {
+        $user = $this->userService->setVip($request->user_id, $request->user_status);
+        if ($user) {
+            return $this->success([
+                'msg' => '开通成功'
+            ]);
+        } else {
+            return new BaseResource(1, '失败，请重试');
+        }
+
+    }
+
+    /**
      * 获取他人信息.
      *
      * @param int $id
@@ -106,7 +125,7 @@ class UserController extends Controller
         $data = $request->all();
         $validator = Validator::make($data, [
             'phone' => 'required',
-            'code'  => 'required',
+            'code' => 'required',
         ]);
         if ($validator->fails()) {
             return new BaseResource(400, '参数错误');
@@ -146,7 +165,7 @@ class UserController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'code'  => 'required',
+            'code' => 'required',
             'phone' => 'required',
         ]);
         if ($validator->fails()) {
