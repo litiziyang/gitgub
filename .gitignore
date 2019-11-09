@@ -18,3 +18,4 @@ yarn-error.log
 index.html
 /public/.htaccess
 .idea/laravel-plugin.xml
+/public/nginx.htaccess
