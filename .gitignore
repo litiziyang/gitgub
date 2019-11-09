@@ -12,3 +12,4 @@ npm-debug.log
 yarn-error.log
 /public/.htaccess
 .idea/laravel-plugin.xml
+/public/nginx.htaccess
