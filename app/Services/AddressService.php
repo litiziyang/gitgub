@@ -40,7 +40,7 @@ interface AddressService
      *
      * @param User $user 用户
      *
-     * @return Address
+     * @return Address|null
      */
-    public function default($user): Address;
+    public function default($user);
 }

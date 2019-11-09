@@ -61,9 +61,9 @@ class AddressServiceImpl implements AddressService
      *
      * @param User $user 用户
      *
-     * @return Address
+     * @return Address|null
      */
-    public function default($user): Address
+    public function default($user)
     {
         if ($user->defaultAddress) {
             return $user->defaultAddress;
