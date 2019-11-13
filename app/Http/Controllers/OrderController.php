@@ -8,8 +8,6 @@ use App\Order;
 use App\Services\AddressService;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Validation\ValidationException;
 use Validator;
 
 class OrderController extends Controller
@@ -101,40 +99,31 @@ class OrderController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 返回单挑订单数据.
      *
-     * @param Order $order
+     * @param int $id 订单ID
      *
-     * @return Response
+     * @return Order
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        return $this->orderService->find($id);
     }
 
     /**
-     * Update the specified resource in storage.
+     * 删除失效订单.
      *
-     * @param Request $request
-     * @param Order   $order
+     * @param integer $id 订单ID
      *
-     * @return Response
+     * @return BaseResource
      */
-    public function update(Request $request, Order $order)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Order $order
-     *
-     * @return Response
-     */
-    public function destroy(Order $order)
-    {
-        //
+        if ($this->orderService->destroy($id)) {
+            return $this->success();
+        } else {
+            return $this->failed('删除失败');
+        }
     }
 
     /**

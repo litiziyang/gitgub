@@ -44,4 +44,17 @@ class Controller extends BaseController
     {
         return new BaseResource(400, '参数错误', $data);
     }
+
+    /**
+     * 失败返回消息
+     *
+     * @param string     $msg 消息内容
+     * @param mixed|null $data
+     *
+     * @return BaseResource
+     */
+    public function failed($msg = '操作失败', $data = null): BaseResource
+    {
+        return new BaseResource(400, $msg, $data);
+    }
 }

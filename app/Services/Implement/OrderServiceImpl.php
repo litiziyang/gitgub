@@ -346,4 +346,24 @@ class OrderServiceImpl implements OrderService
         $order->save();
         return $order;
     }
+
+    /**
+     * 删除订单，必须为已失效订单才可删除
+     *
+     * @param int $order_id 订单ID
+     *
+     * @return bool 是否删除成功
+     * @throws Exception
+     */
+    public function destroy($order_id): bool
+    {
+        $order = $this->orderRepository
+            ->findOrFail($order_id);
+        if ($order->state != Order::INVALID) {
+            return false;
+        } else {
+            $order->delete();
+            return true;
+        }
+    }
 }

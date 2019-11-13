@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Address;
+use App\Http\Resources\BaseResource;
 use App\Order;
 
 interface OrderService
@@ -118,5 +119,14 @@ interface OrderService
      * @return mixed
      */
     public function confirm($order_id);
+
+    /**
+     * 删除订单，必须为已失效订单才可删除
+     *
+     * @param int $order_id 订单ID
+     *
+     * @return bool 是否删除成功
+     */
+    public function destroy($order_id): bool;
 
 }
