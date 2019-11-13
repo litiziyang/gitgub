@@ -5,6 +5,7 @@ namespace App;
 use Eloquent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
@@ -47,6 +48,8 @@ use Lcobucci\JWT\Signer\Key;
  */
 class Order extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'user_id',
         'coupon_id',
