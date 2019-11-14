@@ -189,4 +189,16 @@ class OrderController extends Controller
         $this->orderService->confirm($data['id']);
         return $this->success();
     }
+
+    /**
+     * 获取各类订单的数量
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function count(Request $request)
+    {
+        return $this->success($this->orderService->count($request->user_id));
+    }
 }

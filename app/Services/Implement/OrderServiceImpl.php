@@ -366,4 +366,17 @@ class OrderServiceImpl implements OrderService
             return true;
         }
     }
+
+    /**
+     * 获取各种订单的数量
+     *
+     * @param int $user_id 用户ID
+     *
+     * @return mixed
+     */
+    public function count($user_id)
+    {
+        $results = \DB::select("SELECT count(1) as `count`,state FROM orders WHERE user_id = $user_id GROUP BY state");
+        return array_values($results);
+    }
 }
