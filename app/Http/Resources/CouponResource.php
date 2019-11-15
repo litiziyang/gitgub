@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
+
 use App\Coupon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,10 +21,11 @@ class CouponResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'       => $this->name,
-            'expire'     => strtotime($this->expire),
-            'offer'      => $this->offer,
-            'condition'  => $this->condition,
+            'name'      => $this->name,
+            'expire'    => strtotime($this->expire),
+            'offer'     => $this->offer,
+            'condition' => $this->condition,
+            'new'       => $this->new,
         ];
     }
 }

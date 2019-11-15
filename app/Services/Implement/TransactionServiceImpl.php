@@ -9,6 +9,7 @@ use App\Services\TransactionService;
 use App\Transaction;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use APP\User;
 use Exception;
 
 class TransactionServiceImpl implements TransactionService
@@ -16,11 +17,14 @@ class TransactionServiceImpl implements TransactionService
 
     protected $transactionRepository;
     protected $orderRepository;
+    protected $userRepository;
 
-    public function __construct(Transaction $transaction, Order $order)
+
+    public function __construct(Transaction $transaction, Order $order, User $user)
     {
         $this->transactionRepository = $transaction->query();
-        $this->orderRepository = $order->query();
+        $this->orderRepository       = $order->query();
+        $this->userRepository        = $user->query();
     }
 
     /**
@@ -43,10 +47,10 @@ class TransactionServiceImpl implements TransactionService
         if ($parser->isExpired()) {
             throw new Exception('交易超时');
         }
-        $token_id = $parser->getClaim('id');
+        $token_id     = $parser->getClaim('id');
         $token_number = $parser->getClaim('number');
-        $token_price = $parser->getClaim('price');
-        $order = $this->orderRepository
+        $token_price  = $parser->getClaim('price');
+        $order        = $this->orderRepository
             ->where('id', $token_id)
             ->where('price', $token_price)
             ->where('number', $token_number)
@@ -56,13 +60,13 @@ class TransactionServiceImpl implements TransactionService
         }
         \DB::beginTransaction();
         $transaction = $this->transactionRepository->create([
-            'user_id'  => $user_id,
-            'price'    => $price,
-            'number'   => Transaction::createTransactionNo(),
-            'order_id' => $order->id
-        ]);
+                                                                'user_id'  => $user_id,
+                                                                'price'    => $price,
+                                                                'number'   => Transaction::createTransactionNo(),
+                                                                'order_id' => $order->id,
+                                                            ]);
         // 订单状态改为待发货
-        $order->state = Order::BEING_PROCESSED;
+        $order->state          = Order::BEING_PROCESSED;
         $order->transaction_id = $transaction->id;
         $order->save();
         // 商品销量增加
@@ -74,6 +78,9 @@ class TransactionServiceImpl implements TransactionService
                 $commodity->save();
             }
         }
+        $user         = $this->userRepository->findOrFail($user_id);
+        $user->is_New = 1;
+        $user->save();
         \DB::commit();
         return $transaction;
     }

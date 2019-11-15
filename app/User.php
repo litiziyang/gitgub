@@ -32,6 +32,7 @@ use Lcobucci\JWT\Signer\Key;
  * @property string                                                     $member_type        会员类型 0非会员
  * @property string|null                                                $open_id            微信的ID
  * @property int|null                                                   $default_address_id 默认地址ID
+ * @property int                                                        $is_New             是否新用户
  * @property-read Collection|Address[]                                  $addresses
  * @property-read int|null                                              $addresses_count
  * @property-read Image                                                 $avatar
@@ -79,7 +80,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'phone',
-        'member_type'
+        'member_type',
     ];
 
     /**
@@ -179,7 +180,7 @@ class User extends Authenticatable
                 'file'  => __DIR__ . '/wechat.log',
             ],
         ];
-        $app = Factory::miniProgram($config);
+        $app    = Factory::miniProgram($config);
         return $app;
     }
 

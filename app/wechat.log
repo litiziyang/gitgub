@@ -398,3 +398,35 @@ Content-Length: 101
 {"session_key":"nl\/Wy1v1UB0OSutnVABLRg==","expires_in":7200,"openid":"o6wPv0KL8ydPGv-z1NWFKfDj9Gos"}
 --------
 NULL  
+[2019-11-11T16:28:31.476534+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=27_ykBoVd_xX2_EJYaWbOjhXLQwbxiifN5gBVx5ixW2h4-1M_v91784RY6noFalWYd67wRNxrrKwKgjsLgCQKYL7HAH_tzoip8SSdRNc9HyKoJowQA-TLVKteuF3f0MEjhum1pyZ9TwQ6vnv8DtKZNfAGAODR&appid=wx5f00c36e5ee80279&secret=0826dff67b62c90c4c95197e9a180f20&js_code=071D5Al52n007O09hCm52hdtl52D5AlI&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.64.0 PHP/7.3.4
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Mon, 11 Nov 2019 08:28:27 GMT
+Content-Length: 83
+
+{"session_key":"KY2HBN83aZkAy\/gMnQKS1Q==","openid":"oZRqg4gtSYHIRMnPC84nPm0LsJtU"}
+--------
+NULL  
+[2019-11-11T16:28:42.362997+08:00] EasyWeChat.DEBUG: >>>>>>>>
+GET /sns/jscode2session?access_token=27_ykBoVd_xX2_EJYaWbOjhXLQwbxiifN5gBVx5ixW2h4-1M_v91784RY6noFalWYd67wRNxrrKwKgjsLgCQKYL7HAH_tzoip8SSdRNc9HyKoJowQA-TLVKteuF3f0MEjhum1pyZ9TwQ6vnv8DtKZNfAGAODR&appid=wx5f00c36e5ee80279&secret=0826dff67b62c90c4c95197e9a180f20&js_code=0613giSr1wh2rl0XkuQr1QIlSr13giSD&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.64.0 PHP/7.3.4
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Mon, 11 Nov 2019 08:28:38 GMT
+Content-Length: 83
+
+{"session_key":"KY2HBN83aZkAy\/gMnQKS1Q==","openid":"oZRqg4gtSYHIRMnPC84nPm0LsJtU"}
+--------
+NULL  

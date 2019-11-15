@@ -16,6 +16,7 @@ class UserController extends Controller
 {
     protected $userService;
 
+
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
@@ -112,6 +113,7 @@ class UserController extends Controller
         // TODO 发送短信队列 暂时直接返回消息
         return new BaseResource(0, Cache::get($data['phone']));
     }
+
 
     /**
      * 验证登录

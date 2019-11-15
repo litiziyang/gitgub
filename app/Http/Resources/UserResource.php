@@ -23,12 +23,13 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'     => $this->name,
-            'avatar'   => $this->avatar ? config('app.cos.cdn') . $this->avatar->url : null,
-            'phone'    => $this->phone,
-            'integral' => $this->integral,
-            'balance'  => $this->balance,
-            'is_member' => $this->member_type
+            'name'      => $this->name,
+            'avatar'    => $this->avatar ? config('app.cos.cdn') . $this->avatar->url : null,
+            'phone'     => $this->phone,
+            'integral'  => $this->integral,
+            'balance'   => $this->balance,
+            'is_member' => $this->member_type,
+            'is_New'    => $this->is_New,
         ];
     }
 }

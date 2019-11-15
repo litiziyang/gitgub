@@ -267,6 +267,7 @@ class OrderServiceImpl implements OrderService
             'image_id'   => $orderGood->id,
             'url'        => $commodity->bannerImages[0]->url
         ]);
+
         return $orderGood;
     }
 

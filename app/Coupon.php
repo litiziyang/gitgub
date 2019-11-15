@@ -15,6 +15,7 @@ use Illuminate\Support\Carbon;
  * @property int         $user_id   所属用户
  * @property int         $offer     优惠
  * @property string|null $condition 条件
+ * @property int|null    $new       用户条件
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read User   $user
@@ -39,6 +40,7 @@ class Coupon extends Model
         'user_id',
         'offer',
         'condition',
+        'new',
     ];
 
     public function user()
