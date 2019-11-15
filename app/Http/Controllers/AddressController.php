@@ -144,8 +144,7 @@ class AddressController extends Controller
     {
         $user = $this->userService->getInfo($request->user_id);
         $defaultAddress = $this->addressService->default($user);
-        $defaultAddress = null;
-        if(!$defaultAddress){
+        if (!$defaultAddress) {
             return $this->success();
         }
         return $this->success(new AddressResource($defaultAddress));

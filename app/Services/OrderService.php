@@ -129,4 +129,13 @@ interface OrderService
      */
     public function destroy($order_id): bool;
 
+    /**
+     * 获取各种订单的数量
+     *
+     * @param int $user_id 用户ID
+     *
+     * @return mixed
+     */
+    public function count($user_id);
+
 }
