@@ -7,6 +7,7 @@ use App\Http\Resources\BaseResource;
 use App\Http\Resources\CouponResource;
 use Illuminate\Http\Request;
 use App\Services\CouponService;
+use Validator;
 
 class CouponController extends Controller
 {
@@ -30,6 +31,7 @@ class CouponController extends Controller
         return new BaseResource(0, "", CouponResource::collection($coupon));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -43,12 +45,24 @@ class CouponController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return BaseResource
      */
     public function store(Request $request)
     {
-        //
+        $data      = $request->all();
+        $validator = Validator::make($data, [
+            'share_id'  => 'required|integer',
+            'offer'     => 'required|integer',
+            'condition' => 'required|string',
+            'new'       => 'required|integer',
+        ]);
+        if ($validator->failed()) {
+            return $this->validate();
+        }
+        $coupon = $this->couponService->createCoupon($data['offer'], $data['share_id'], $data['condition'], $data['new']);
+        return $this->success(new CouponResource($coupon));
+
     }
 
     /**
@@ -76,8 +90,8 @@ class CouponController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Coupon              $coupon
+     * @param Request     $request
+     * @param \App\Coupon $coupon
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Coupon $coupon)

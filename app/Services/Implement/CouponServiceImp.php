@@ -5,8 +5,6 @@ namespace App\Services\Implement;
 
 use App\Coupon;
 use App\Services\CouponService;
-use App\User;
-use mysql_xdevapi\Schema;
 
 
 class CouponServiceImp implements CouponService
@@ -30,5 +28,19 @@ class CouponServiceImp implements CouponService
         return $this->couponRepository
             ->where('user_id', $user_id)
             ->get();
+    }
+
+
+    public function createCoupon($offer, $share_id, $condition, $new)
+    {
+        $coupon = $this->couponRepository
+            ->create([
+                'user_id'   => $share_id,
+                'offer'     => $offer,
+                'name'      => '分享的优惠券',
+                'condition' => $condition,
+                'new'       => $new,
+            ]);
+        return $coupon;
     }
 }
