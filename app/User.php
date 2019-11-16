@@ -177,7 +177,7 @@ class User extends Authenticatable
             'response_type' => 'array',
             'log'           => [
                 'level' => 'debug',
-                'file'  => __DIR__ . '/wechat.log',
+                'file'  => __DIR__ . '/storage/logs/wechat.log',
             ],
         ];
         $app    = Factory::miniProgram($config);
